@@ -1,0 +1,1004 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{graphicx}  % Để thêm logo
+\usepackage{fancyhdr}  % Tạo header và footer
+\usepackage{geometry}  % Cài đặt lề trang
+\usepackage{tikz} 
+\usetikzlibrary{positioning}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}     % Để sử dụng [H] cho vị trí cố định của hình
+\usepackage{amsmath}   % Để hỗ trợ math equations
+\usepackage{hyperref}  % Để tạo hyperlink trong mục lục (load cuối cùng)
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Báo cáo Phân Tích Gói Tin Mạng với Wireshark},
+    pdfpagemode=FullScreen,
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=pythonstyle}
+
+\setlength{\headheight}{15pt}  % Fix fancyhdr warning
+\lhead{Học phần: Mạng máy tính}  % Thiết lập header trái
+\rhead{Trường Đại học Khoa học Tự nhiên}  % Thiết lập header phải
+\cfoot{Trang \thepage}  % Footer giữa hiển thị số trang
+
+% Cài đặt lề trang
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+\renewcommand{\contentsname}{\huge Mục lục}
+
+% Định dạng tiêu đề trang bìa
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \textbf{TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN} \\[0.5cm]
+    \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH} \\[0.5cm]
+    \textbf{KHOA CÔNG NGHỆ THÔNG TIN} \\[0.5cm]
+
+    \hrule
+    \Huge
+    \begin{center}
+    \textbf{\huge Báo cáo đồ án thực hành}\\[0.5cm]
+    \textbf{\Large Phân Tích Gói Tin Mạng với Wireshark}
+    \end{center}
+    \hrule
+    \Large
+    \begin{center}
+    Môn học: Mạng Máy Tính \\
+    \end{center}
+
+    \begin{flushleft}
+        \textbf{Giáo viên hướng dẫn:} \\
+        Thầy Lê Ngọc Sơn \\
+        Thầy Nguyễn Thanh Quân \\
+    \end{flushleft}
+
+    \begin{flushleft}
+        \textbf{Thành viên:} \\
+        Nguyễn Hữu Gia Minh - 24127078 \\
+        Nguyễn Khánh Linh - 24127197 \\
+        Trần Hoàng Phúc - 24127505 \\
+    \end{flushleft}
+
+    \vfill
+
+    \begin{center}
+        \includegraphics[width=6cm]{LOGO.png} \\[1cm]
+        Ngày 21 tháng 12 năm 2024
+    \end{center}
+    
+    \thispagestyle{empty}  % Đảm bảo không có header/footer trên trang bìa
+\end{titlepage}
+
+% Kích hoạt header/footer cho các trang sau trang bìa
+\pagestyle{fancy}  % Áp dụng header/footer từ trang tiếp theo
+
+% Chỉnh sửa footer và header cho các trang còn lại
+\cfoot{\thepage}  % Footer giữa hiển thị số trang
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Giới thiệu}
+\subsection{Mục đích dự án}
+Dự án này nhằm mục đích thu thập, lọc và phân tích lưu lượng mạng bằng công cụ Wireshark, đồng thời giúp sinh viên hiểu rõ các khái niệm cơ bản về các giao thức mạng khác nhau như HTTP, DHCP, DNS, TCP/IP và Ethernet.
+
+\subsection{Giới thiệu công cụ Wireshark}
+Wireshark là một công cụ phân tích gói tin mạng mã nguồn mở, cho phép bắt và kiểm tra dữ liệu truyền qua mạng ở mức độ chi tiết. Wireshark hỗ trợ hàng trăm giao thức mạng và cung cấp giao diện trực quan để phân tích lưu lượng mạng theo thời gian thực.
+
+\subsection{Thông tin nhóm thực hiện}
+\begin{itemize}
+    \item \textbf{Tên học phần:} Mạng máy tính
+    \item \textbf{Đồ án thực hiện:} Phân tích gói tin mạng với Wireshark
+    \item \textbf{Thời gian thực hiện:} 4/12/2025 đến 11/12/2025
+\end{itemize}
+
+\noindent\textbf{Danh sách thành viên:}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|l|l|}
+\hline
+\textbf{STT} & \textbf{MSSV} & \textbf{Họ và tên} & \textbf{Vai trò} \\ \hline
+01           & 24127078      & Nguyễn Hữu Gia Minh     & Thành viên      \\ \hline
+02           & 24127197      & Nguyễn Khánh Linh       & Thành viên      \\ \hline
+03           & 24127505      & Trần Hoàng Phúc         & Nhóm trưởng     \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\section{Phần 1: Phân Tích Lưu Lượng HTTP}
+
+\subsection{Mô tả các bước thực hiện}
+\begin{itemize}
+    \item \textbf{Bước 1:} Khởi động trình duyệt web và xóa cache của trình duyệt (clear browser cache).
+    \item \textbf{Bước 2:} Khởi động Wireshark và bắt đầu capture packets trên network interface đang hoạt động.
+    \item \textbf{Bước 3:} Truy cập URL: \url{http://gaia.cs.umass.edu/wireshark-labs/HTTP-wireshark-file4.html} trong trình duyệt.
+    \item \textbf{Bước 4:} Đợi trang web tải hoàn tất, sau đó dừng Wireshark capture.
+    \item \textbf{Bước 5:} Áp dụng display filter \texttt{http} trong Wireshark để chỉ hiển thị các HTTP packets.
+\end{itemize}
+
+\subsection{Câu hỏi phân tích và trả lời}
+
+\subsubsection{Câu 1: Số lượng HTTP GET và địa chỉ đích}
+\textbf{Câu hỏi:} Có bao nhiêu tin nhắn HTTP GET được trình duyệt gửi đi? Các yêu cầu này được gửi đến địa chỉ Internet nào?
+
+\textbf{Trả lời:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question1.png}
+    \caption{Các yêu cầu HTTP GET được gửi từ trình duyệt}
+    \label{fig:http_get_requests}
+\end{figure}
+
+Có tổng cộng 3 yêu cầu HTTP GET được trình duyệt gửi đi, không tính \texttt{favicon.ico}:
+\begin{itemize}
+    \item \texttt{GET /wireshark-labs/HTTP-wireshark-file4.html HTTP/1.1}
+    \item \texttt{GET /pearson.png HTTP/1.1}
+    \item \texttt{GET /8E\_cover\_small.jpg HTTP/1.1}
+\end{itemize}
+
+\noindent\textit{(Note: You should ignore any HTTP GET and response for \texttt{favicon.ico}. If you see a reference to this file, it is your browser automatically asking the server if it (the server) has a small icon file that should be displayed next to the displayed URL in your browser. We'll ignore references to this pesky file in this lab.)} (Ross, 2005-2016)
+
+Các yêu cầu này được gửi đến 2 địa chỉ Internet khác nhau:
+\begin{itemize}
+    \item \texttt{128.119.245.12} - cho file HTML và \texttt{pearson.png}
+    \item \texttt{2.56.99.24} - cho \texttt{8E\_cover\_small.jpg}
+\end{itemize}
+
+\noindent\texttt{10.128.3.138}: địa chỉ IP nguồn của laptop.
+
+\subsubsection{Câu 2: Tải ảnh tuần tự hay đồng thời}
+\textbf{Câu hỏi:} Xác định xem trình duyệt tải hai hình ảnh tuần tự hay đồng thời từ các web server tương ứng, và giải thích kết luận của bạn bằng cách kiểm tra thời gian của các yêu cầu và địa chỉ IP nguồn.
+
+\textbf{Trả lời:}
+
+Trình duyệt tải hai ảnh một cách \textbf{song song} từ hai web server khác nhau.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question2_1.png}
+    \caption{Timeline của 2 kết nối TCP đến 2 server}
+    \label{fig:tcp_connections}
+\end{figure}
+
+Đây là 2 kết nối TCP được tạo để kết nối với 2 server, ta có thể thấy:
+\begin{itemize}
+    \item Kết nối đến Server 1 (\texttt{128.119.245.12}) bắt đầu lúc 4.285s và kết thúc lúc $\sim$12.05s
+    \item Kết nối đến Server 2 (\texttt{2.56.99.24}) bắt đầu lúc 4.894s và kết thúc lúc $\sim$6.49s
+\end{itemize}
+
+$\Rightarrow$ \textbf{Thời gian chồng lấn (Overlap):} Từ 4.894s đến 6.49s ($\sim$1.6 giây), cả hai kết nối TCP đều đang hoạt động đồng thời.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question2_2.png}
+    \caption{IO Graph thể hiện traffic từ 2 server đồng thời}
+    \label{fig:io_graph}
+\end{figure}
+
+Nhìn vào IO Graph phía trên:
+\begin{itemize}
+    \item Đường màu xanh lá (Server \texttt{128.119.245.12}): Traffic kéo dài với nhiều đỉnh
+    \item Đường màu đỏ (Server \texttt{2.56.99.24}): Traffic xuất hiện trong khoảng giữa
+\end{itemize}
+
+$\rightarrow$ Hai đường màu giao nhau trong cùng một khoảng thời gian, chứng minh dữ liệu từ cả hai server đang được truyền đồng thời.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question2_3.png}
+    \caption{HTTP Packet List - Thứ tự các gói GET request}
+    \label{fig:http_packets}
+\end{figure}
+
+Khi nhìn vào HTTP Packet List, ta thấy các gói GET request xuất hiện có vẻ tuần tự:
+\begin{itemize}
+    \item Gói 956 (4.819s): \texttt{GET pearson.png} $\rightarrow$ Server \texttt{128.119.245.12}
+    \item Gói 992 (5.062s): Nhận 301 Response từ Server \texttt{128.119.245.12}
+    \item Gói 996 (5.115s): \texttt{GET 8E\_cover\_small.jpg} $\rightarrow$ Server \texttt{2.56.99.24}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question2_4.png}
+    \caption{Filter ip.addr == 128.119.245.12 - TLS handshake và redirect}
+    \label{fig:tls_redirect}
+\end{figure}
+
+Nhìn vào hình ảnh trên, filter: \texttt{ip.addr == 128.119.245.12}, ta thấy sau khi server gửi về thông báo "Moved Permanently" nó tiến hành redirect thông qua các TLS handshake như trên, trong thời gian đó hình ảnh thứ 2 "\texttt{8E\_cover\_small}" đã được lấy hoàn tất vào giây thứ 6.49s.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question2_5.png}
+    \caption{Application Data packet chứa ảnh pearson.png}
+    \label{fig:app_data}
+\end{figure}
+
+Trong khi đó, vào giây thứ 6.803s ta thấy packet 1927 có info 'Application Data' với protocol được nhận diện là 'Hypertext Transfer Protocol', kích thước 3632 bytes - đây có thể là response chứa ảnh \texttt{pearson.png} được gửi về qua HTTPS. Hai quá trình tải diễn ra song song, ảnh \texttt{cover\_small.jpg} đã hoàn thành (6.49s) trong khi ảnh \texttt{pearson.png} mới nhận được dữ liệu lúc 6.803s ở packet 1927.
+
+\newpage
+\subsubsection{Câu 3: Thông tin phản hồi HTTP của tệp HTML}
+\textbf{Câu hỏi:} Tìm tin nhắn phản hồi HTTP chứa nội dung của trang HTML ban đầu (HTTP-wireshark-file4.html). Status code và status phrase mà server cung cấp là gì?
+
+\textbf{Trả lời:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question3_1.png}
+    \caption{Packet trả về của server chứa nội dung HTML}
+    \label{fig:http_response}
+\end{figure}
+
+Ta click vào packet trả về của server (Packet thứ 951 trên hình), vào mục Hypertext Transfer Protocol ở dưới ta sẽ thấy được các status code, status phrase trả về.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question3_2.png}
+    \caption{Chi tiết HTTP response header}
+    \label{fig:http_status}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Status code:} 200
+    \item \textbf{Status phrase:} OK
+\end{itemize}
+
+\newpage
+\subsubsection{Câu 4: Số lượng kết nối TCP và Stream Index Numbers}
+\textbf{Câu hỏi:} Dựa trên câu trả lời ở Câu 1, có bao nhiêu kết nối TCP riêng biệt được thiết lập để tải tệp HTML và hai hình ảnh nhúng? Cung cấp bằng chứng bằng cách liệt kê các Stream Index Numbers duy nhất (ví dụ: \texttt{tcp.stream eq X}) được sử dụng cho ba đối tượng này.
+
+\textbf{Trả lời:}
+
+Có tổng cộng \textbf{2 TCP connections} được thiết lập để tải file HTML và hai hình ảnh nhúng.
+
+\begin{itemize}
+\item \textbf{TCP Connection thứ nhất - \texttt{tcp.stream eq 5}:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question4_1.png}
+    \caption{TCP stream 5 - Kết nối đến server 128.119.245.12}
+    \label{fig:tcp_stream_5}
+\end{figure}
+
+Connection này được sử dụng để tải cả file HTML chính và hình ảnh đầu tiên. Cụ thể, trong \texttt{tcp.stream eq 5}, chúng ta có thể thấy các packet sau:
+
+\begin{itemize}
+    \item Packet 919 chứa yêu cầu GET cho file \texttt{HTTP-wireshark-file4.html} được gửi đến địa chỉ IP đích \texttt{128.119.245.12}.
+    \item Packet 951 chứa phản hồi HTTP 200 OK với nội dung của file HTML.
+    \item Packet 956 chứa yêu cầu GET cho hình ảnh \texttt{pearson.png}, cũng được gửi đến cùng địa chỉ IP \texttt{128.119.245.12}.
+    \item Packet 992 chứa phản hồi với status code 301 Moved Permanently cho hình ảnh này.
+\end{itemize}
+
+Tất cả các giao tiếp này diễn ra trên cùng một TCP connection vì chúng đều được gửi đến cùng một server có địa chỉ \texttt{128.119.245.12}.
+
+\item \textbf{TCP Connection thứ hai - \texttt{tcp.stream eq 7}:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question4_2.png}
+    \caption{TCP stream 7 - Kết nối đến server 2.56.99.24}
+    \label{fig:tcp_stream_7}
+\end{figure}
+
+Connection này được thiết lập riêng biệt để tải hình ảnh thứ hai. Trong \texttt{tcp.stream eq 7}, chúng ta có thể thấy:
+
+\begin{itemize}
+    \item Packet 996 chứa yêu cầu GET cho file \texttt{8E\_cover\_small.jpg} được gửi đến địa chỉ IP đích \texttt{2.56.99.24}.
+    \item Các packet tiếp theo trong cùng stream này chứa dữ liệu phản hồi của hình ảnh được chia thành nhiều TCP segments.
+\end{itemize}
+
+Lý do phải thiết lập một TCP connection mới là vì hình ảnh này nằm trên một web server hoàn toàn khác với địa chỉ IP \texttt{2.56.99.24}. Khi trình duyệt muốn tải tài nguyên từ một server khác, nó phải mở một TCP connection mới đến server đó.
+\end{itemize}
+
+\newpage
+\subsubsection{Câu 5: TCP Three-Way Handshake}
+\textbf{Câu hỏi:} Đối với kết nối TCP đã tải tệp HTML ban đầu, xác định ba gói tin tạo thành quá trình Bắt tay ba chiều TCP (TCP Three-Way Handshake). Liệt kê các cờ TCP được đặt trong mỗi gói tin này theo thứ tự.
+
+\textbf{Trả lời:}
+
+\textbf{TCP Connection thứ nhất - \texttt{tcp.stream eq 5}:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question5.png}
+    \caption{TCP Three-Way Handshake - 3 packets thiết lập kết nối}
+    \label{fig:tcp_handshake}
+\end{figure}
+
+Hình ảnh trên hiển thị 3 packets thể hiện quá trình "TCP Three-Way Handshake" (bắt tay ba bước) để thiết lập kết nối đáng tin cậy giữa client và server:
+
+\begin{enumerate}
+    \item \textbf{Packet 899:} Client gửi yêu cầu kết nối tới Server với cờ TCP là \texttt{[SYN]}, seq = 0. (Đây là bước khởi tạo, client yêu cầu đồng bộ hóa sequence number để bắt đầu kết nối)
+    
+    \item \textbf{Packet 917:} Server phản hồi lại Client với cờ TCP là \texttt{[SYN, ACK]}, seq = 0, ack = 1. (Bước này server đồng ý thiết lập kết nối, xác nhận seq của client và gửi seq của mình, sẵn sàng giao tiếp)
+    
+    \item \textbf{Packet 918:} Client xác nhận hoàn tất kết nối với cờ TCP là \texttt{[ACK]}, seq = 1, ack = 1. (Sau packet này, TCP connection đã được thiết lập hoàn toàn và sẵn sàng truyền dữ liệu, như HTTP GET sau đó)
+\end{enumerate}
+
+\subsubsection{Câu 6: TCP Window Size Value}
+\textbf{Câu hỏi:} Chọn gói truyền dữ liệu lớn nhất (một gói có cờ PSH hoặc ACK được đặt và có độ dài lớn) trong quá trình tải một trong các tệp hình ảnh. Kiểm tra giá trị TCP Window Size trong chi tiết gói tin. Giá trị này đại diện cho điều gì, và tại sao nó lại quan trọng đối với Lớp Giao vận (Transport Layer)?
+
+\textbf{Trả lời:}
+
+Trong TCP connection: \texttt{tcp.stream eq 7} (dùng để download file hình ảnh \texttt{8E\_cover\_small.jpg} từ server \texttt{2.56.99.24}), chọn packet 1806 làm ví dụ cho largest data transfer packet (với flag \texttt{[PSH, ACK]} và length=1510 bytes).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question6_1.png}
+    \caption{Packet 1806 - Largest data transfer packet}
+    \label{fig:tcp_window_packet}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_question6_2.png}
+    \caption{Chi tiết TCP Window Size trong packet 1806}
+    \label{fig:tcp_window_detail}
+\end{figure}
+
+Phân tích TCP Window Size:
+\begin{itemize}
+    \item \textbf{Window (Raw):} 21 (Đây là giá trị thô ghi trong header của gói tin).
+    \item \textbf{Window size scaling factor:} 2048 (Đây là hệ số nhân đã được thỏa thuận trong quá trình bắt tay 3 bước của TCP handshake mục WS (window scale)).
+    \item \textbf{Calculated window size:} 43008 (21 $\times$ 2048).
+\end{itemize}
+
+Giá trị 43008 là kích thước vùng đệm nhận của thiết bị gửi gói tin này (trong trường hợp này là Server \texttt{2.56.99.24}).
+
+\begin{itemize}
+    \item Thông báo cho thiết bị nhận gói tin này (Client) biết rằng thiết bị gửi (Server) hiện đang có bộ nhớ đệm (buffer) trống là 43008 bytes. Điều này cho phép Client có thể gửi liên tiếp lượng dữ liệu tối đa là 43008 bytes ngược lại cho Server mà không cần dừng lại chờ tín hiệu xác nhận (ACK) cho từng gói.
+\end{itemize}
+
+\textbf{Tại sao TCP Window Size quan trọng đối với Lớp Giao vận:}
+
+\begin{itemize}
+    \item \textbf{Ngăn chặn quá tải:} Đảm bảo Sender không gửi dữ liệu vượt quá khả năng xử lý của bên Receiver.
+    \item \textbf{Đảm bảo độ tin cậy:} Nếu gửi khi mà bộ đệm không có khả năng chứa hết $\rightarrow$ Dẫn đến việc bị "drop" dữ liệu, phải gửi lại gây ra hiện tượng tắc nghẽn mạng và lãng phí băng thông.
+\end{itemize}
+
+\newpage
+\section{Phần 2: Phân Tích Lưu Lượng DHCP}
+
+\subsection{Mô tả các bước thực hiện}
+\begin{itemize}
+    \item \textbf{Bước 1: Chuẩn bị và giải phóng địa chỉ IP ban đầu}
+    \begin{itemize}
+        \item Mở ứng dụng Windows Command Prompt (CMD) bằng quyền Quản trị viên (Run as administrator).
+        \item Nhập lệnh \texttt{ipconfig /release} để yêu cầu Host giải phóng địa chỉ IP hiện tại đang sử dụng, chuẩn bị cho quá trình xin cấp phát mới.
+    \end{itemize}
+    
+    \item \textbf{Bước 2: Bắt đầu ghi lại dữ liệu}
+    \begin{itemize}
+        \item Khởi động ứng dụng phân tích gói tin Wireshark.
+        \item Bắt đầu ghi lại dữ liệu gói tin (packet capture) trên giao diện mạng đang hoạt động của Host.
+    \end{itemize}
+    
+    \item \textbf{Bước 3: Chu kỳ cấp phát IP lần 1}
+    \begin{itemize}
+        \item Quay lại Command Prompt, nhập lệnh \texttt{ipconfig /renew}.
+        \item Lệnh này hướng dẫn Host bắt đầu quy trình DHCP để yêu cầu cấp phát một cấu hình mạng mới (bao gồm một địa chỉ IP mới).
+    \end{itemize}
+    
+    \item \textbf{Bước 4: Chu kỳ cấp phát IP lần 2}
+    \begin{itemize}
+        \item Sau khi lệnh trước kết thúc, nhập lại lệnh \texttt{ipconfig /renew}.
+        \item Lệnh này được thực hiện để quan sát sự khác biệt trong quá trình trao đổi gói tin DHCP khi máy khách đã có địa chỉ IP.
+    \end{itemize}
+    
+    \item \textbf{Bước 5: Giải phóng địa chỉ IP}
+    \begin{itemize}
+        \item Khi lệnh \texttt{ipconfig /renew} lần thứ hai hoàn tất, nhập lệnh \texttt{ipconfig /release}.
+        \item Lệnh này hướng dẫn Host giải phóng địa chỉ IP đã được cấp phát trở lại cho DHCP Server.
+    \end{itemize}
+    
+    \item \textbf{Bước 6: Chu kỳ cấp phát IP lần cuối}
+    \begin{itemize}
+        \item Cuối cùng, nhập lệnh \texttt{ipconfig /renew} lần nữa.
+        \item Lệnh này tạo ra một chu kỳ DHCP đầy đủ khác.
+    \end{itemize}
+    
+    \item \textbf{Bước 7: Kết thúc ghi dữ liệu}
+    \begin{itemize}
+        \item Quay lại Wireshark và dừng quá trình ghi lại gói tin.
+        \item Lưu lại bản ghi gói tin để phục vụ cho việc phân tích.
+        \item Áp dụng bộ lọc \texttt{dhcp || arp} để phân tích các gói tin DHCP và ARP.
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part3_mota.png}
+    \caption{Kết quả capture gói tin DHCP và ARP}
+\end{figure}
+
+\subsection{Câu hỏi phân tích và trả lời}
+
+\subsubsection{Câu 1: Gói tin ARP trong quá trình trao đổi DHCP}
+\textbf{Câu hỏi:} Các gói tin ARP có xuất hiện trong giai đoạn trao đổi DHCP không? Nếu có, mục đích của chúng trong quá trình này là gì?
+
+\textbf{Trả lời:}
+
+Dựa vào các dấu thời gian (Time) trong hình, ta có thể tính khoảng thời gian cho hai chu kỳ DORA hoàn chỉnh:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part2_question1_1.png}
+    \caption{Chu kỳ DHCP DORA thứ nhất và thứ hai}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Chu kỳ thứ nhất:}
+    \begin{itemize}
+        \item Bắt đầu (Discover): Gói tin 193 tại thời điểm 17.243646 giây.
+        \item Kết thúc (ACK): Gói tin 197 tại thời điểm 17.292309 giây.
+        \item Thời gian hoàn tất: 17.292309 - 17.243646 = 0.048663 giây.
+    \end{itemize}
+    
+    \item \textbf{Chu kỳ thứ hai:}
+    \begin{itemize}
+        \item Bắt đầu (Discover): Gói tin 1520 tại thời điểm 61.961858 giây.
+        \item Kết thúc (ACK): Gói tin 1524 tại thời điểm 62.005171 giây.
+        \item Thời gian hoàn tất: 62.005171 - 61.961858 = 0.043313 giây.
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part2_question1_2.png}
+    \caption{Gói tin ARP xuất hiện sau DHCP ACK}
+\end{figure}
+
+\textbf{Kết luận:}
+\begin{itemize}
+    \item Trong khoảng thời gian của 2 chu kì trên, không có gói tin ARP được trao đổi trong quá trình DHCP.
+\end{itemize}
+
+\textbf{Giải thích nguyên nhân:}
+\begin{itemize}
+    \item \textbf{Vai trò và cấp độ hoạt động khác nhau của hai giao thức:}
+    \begin{itemize}
+        \item DHCP (DORA) hoạt động chủ yếu ở lớp Ứng dụng (Application Layer) và phục vụ mục đích cấp phát địa chỉ IP.
+        \item ARP hoạt động ở lớp Liên kết dữ liệu (Data Link Layer) và chỉ phục vụ mục đích phân giải địa chỉ MAC từ một địa chỉ IP đã biết.
+    \end{itemize}
+    
+    \item \textbf{Tuy nhiên, các gói ARP được ghi nhận xuất hiện ngay sau gói DHCP ACK là rất quan trọng:}
+    \begin{itemize}
+        \item \textbf{Phân giải địa chỉ MAC của Gateway:} Sau khi nhận địa chỉ IP và biết địa chỉ Gateway qua DHCP ACK, máy phải sử dụng ARP để tìm địa chỉ MAC tương ứng của Gateway. Đây là bước bắt buộc để máy có thể đóng gói dữ liệu và gửi lưu lượng truy cập ra khỏi mạng cục bộ. Các gói ARP liên quan: ARP Request (Who has 192.168.1.1? Tell 192.168.1.101) và ARP Reply (ví dụ: Gói 200, 201,...).
+        
+        \item \textbf{Kiểm tra xung đột IP (ARP Probe):} Máy gửi một ARP Probe cho chính địa chỉ IP vừa được cấp phát. Nếu nhận được bất kỳ phản hồi nào, nó sẽ biết có sự xung đột địa chỉ IP (IP Conflict) và sẽ từ bỏ IP đó để bắt đầu lại quá trình DHCP. Các gói ARP liên quan: ARP Request (ví dụ: Who has 192.168.1.101?).
+        
+        \item \textbf{Định danh địa chỉ mới (ARP Announcement):} Máy có thể chủ động thông báo cho các thiết bị khác trong mạng rằng địa chỉ MAC đã được gán cho 1 địa chỉ IP. Điều này giúp các máy khác cập nhật nhanh chóng bảng ARP của chúng và tránh sự chậm trễ khi giao tiếp lần đầu. Gói tin liên quan: ARP Announcement (ARP Announcement for 192.168.1.101).
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\subsubsection{Câu 2: Địa chỉ IP nguồn và đích trong DHCP messages}
+\textbf{Câu hỏi:} Địa chỉ IP nguồn và đích được sử dụng trong các Datagram IP mang bốn tin nhắn DHCP (DHCP Discover, DHCP Offer, DHCP Request, DHCP ACK) là gì?
+
+\textbf{Trả lời:}
+
+Quá trình DHCP sử dụng mô hình trao đổi bốn bước được gọi là DORA (Discover, Offer, Request, ACK). Đặc điểm quan trọng là máy chưa có địa chỉ IP hợp lệ cho đến khi hoàn tất bước cuối cùng, do đó việc đóng gói các thông điệp DHCP trong IP datagram yêu cầu các giá trị địa chỉ đặc biệt.
+
+\textbf{Bảng phân tích địa chỉ IP trong từng thông điệp:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|p{5cm}|}
+\hline
+\textbf{Thông điệp DHCP} & \textbf{IP Nguồn} & \textbf{IP Đích} & \textbf{Vai trò} \\
+\hline
+Discover (D) & 0.0.0.0 & 255.255.255.255 & Máy chưa có IP, broadcast tìm kiếm server \\
+\hline
+Offer (O) & 192.168.1.1 & 192.168.1.101 & Server đề xuất IP, gửi unicast đến IP được đề xuất \\
+\hline
+Request (R) & 0.0.0.0 & 255.255.255.255 & Máy khách vẫn chưa có IP, broadcast thông báo chấp nhận \\
+\hline
+ACK (A) & 192.168.1.1 & 192.168.1.101 & Server xác nhận, gửi unicast đến IP đã cấp phát \\
+\hline
+\end{tabular}
+\caption{Địa chỉ IP trong các thông điệp DHCP}
+\end{table}
+
+\textbf{Phân tích các địa chỉ IP được Host Client sử dụng trong các bước Discover và Request:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Địa chỉ} & \textbf{Mục đích sử dụng} \\
+\hline
+IP Nguồn: 0.0.0.0 & Báo hiệu máy chưa có IP. Lệnh Discover và Request được gửi khi ngăn xếp IP (IP Stack) của Client chưa được khởi tạo đầy đủ. 0.0.0.0 là địa chỉ "phi cấu hình" (unspecified address) để Host có thể tạo và gửi gói tin ở Lớp Mạng mà không cần IP hợp lệ. \\
+\hline
+IP Đích: 255.255.255.255 & Đảm bảo gói tin Broadcast đến được tất cả các thiết bị trong mạng, đặc biệt là DHCP Server (vốn là thiết bị chưa được biết đến). Điều này cần thiết trong cả Discover (tìm kiếm DHCP server chưa biết vị trí) và Request (thông báo cho Server được chọn và các Server khác). \\
+\hline
+\end{tabular}
+\caption{Phân tích địa chỉ IP trong Discover và Request}
+\end{table}
+
+\textbf{Sự khác biệt rõ ràng nhất nằm ở cách DHCP Server phản hồi lại trong các bước Offer và ACK:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Gói tin} & \textbf{IP đích trong lý thuyết} & \textbf{IP đích trong dữ liệu thực tế} \\
+\hline
+Offer và ACK & 255.255.255.255 (Broadcast) & 192.168.1.101 (Unicast) \\
+\hline
+\end{tabular}
+\caption{So sánh IP đích lý thuyết và thực tế}
+\end{table}
+
+\textbf{Phân tích sự khác biệt:}
+\begin{itemize}
+    \item \textbf{Hiệu quả (Efficiency):} Server đã quyết định gửi Offer và ACK trực tiếp đến địa chỉ IP mà nó đề xuất/vừa gán thay vì gửi Broadcast để giảm lưu lượng Broadcast trên mạng.
+    
+    \item \textbf{Khẳng định MAC:} Server có thể làm điều này vì nó đã biết địa chỉ MAC của Client (được gửi trong gói Discover). Mặc dù IP chưa được Client xác nhận chính thức, Server vẫn có thể đóng gói dữ liệu và gửi đến địa chỉ MAC của Client.
+    
+    \item \textbf{Tính tạm thời của IP:} Việc sử dụng địa chỉ 192.168.1.101 ngay từ gói Offer nhấn mạnh rằng địa chỉ IP đó, mặc dù chưa được xác nhận, đã có giá trị logic và được sử dụng để định danh Host trong phần còn lại của quá trình.
+\end{itemize}
+
+\subsubsection{Câu 3: Xử lý khi nhận ARP Reply sau DHCP ACK}
+\textbf{Câu hỏi:} Theo RFC 2131, nếu client nhận được ARP Reply từ một thiết bị khác sau khi nhận DHCP ACK, client phải làm gì?
+
+\textbf{Trả lời:}
+
+\textbf{Phát hiện xung đột thông qua ARP Probe:}
+
+Sau khi Host Client nhận được gói DHCP ACK từ Server, nó xem địa chỉ IP mới được gán là địa chỉ hợp lệ. Tuy nhiên, trước khi chính thức sử dụng, Host cần thực hiện bước xác minh cuối cùng để tránh xung đột địa chỉ IP (IP Address Conflict) trên mạng cục bộ.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part2_question3.png}
+    \caption{ARP Probe và xử lý xung đột IP theo RFC 2131}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Cơ chế:} Host gửi một hoặc nhiều gói tin ARP Probe (ARP thăm dò) cho chính địa chỉ mới được cấp. Đây là các gói ARP không có địa chỉ IP nguồn để thăm dò.
+    
+    \item \textbf{Tình huống xung đột:} Khi Host nhận được gói ARP Reply từ một thiết bị khác trên mạng, điều đó chứng tỏ địa chỉ IP đó đã được sử dụng.
+\end{itemize}
+
+\textbf{Hành động bắt buộc theo Tiêu chuẩn RFC 2131:}
+
+\begin{itemize}
+    \item \textbf{Gửi thông điệp DHCPDECLINE:} Host Client phải ngay lập tức gửi một gói tin DHCPDECLINE đến DHCP Server.
+    
+    \item \textbf{Mục đích của DHCPDECLINE:} Thông báo cho DHCP server biết rằng địa chỉ IP được cấp phát không thể sử dụng do xung đột, yêu cầu server đánh dấu địa chỉ này là không khả dụng trong thời gian nhất định.
+\end{itemize}
+
+\textbf{Sau khi gửi DHCPDECLINE, Host Client không được phép sử dụng địa chỉ IP gây xung đột đó và phải chuyển sang trạng thái mới để xin cấp lại địa chỉ:}
+
+\begin{itemize}
+    \item \textbf{Từ bỏ IP:} Host phải lập tức hủy bỏ việc sử dụng địa chỉ IP xung đột đó.
+    
+    \item \textbf{Chuyển trạng thái:} Host chuyển về trạng thái INITIALIZING (Khởi tạo).
+    
+    \item \textbf{Bắt đầu lại:} Host sẽ khởi động lại toàn bộ quá trình xin cấp IP bằng cách gửi một gói DHCP Discover mới.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part2_question3.png}
+    \caption{Quy trình xử lý xung đột IP với DHCPDECLINE}
+\end{figure}
+
+\newpage
+\subsubsection{Câu 4: Lý do sử dụng UDP cố định và tính phi kết nối}
+\textbf{Câu hỏi:} Giải thích lý do tại sao DHCP sử dụng các cổng UDP cố định (68 cho client, 67 cho server) và vai trò của tính chất phi kết nối (connectionless) của UDP trong giao thức DHCP.
+
+\textbf{Trả lời:}
+
+Việc sử dụng các cổng cố định (Port 68 và 67) trong DHCP, ngay cả trong thông điệp Request, là bắt buộc và phục vụ 2 mục đích chính:
+
+\begin{itemize}
+    \item \textbf{Tiêu chuẩn hóa và nhận diện ứng dụng}
+    \begin{itemize}
+        \item \textbf{Port đích (Destination Port 67):} Đây là cổng được chỉ định cho DHCP Server. Mọi Host Client đều biết rằng để nói chuyện với DHCP Server, nó phải gửi gói tin đến Port 67.
+        
+        \item \textbf{Port nguồn (Source Port 68):} Đây là cổng được chỉ định cho DHCP Client. Việc sử dụng cổng cố định này là một phần của tiêu chuẩn DHCP, giúp Server nhận diện ngay lập tức rằng gói tin này đến từ một ứng dụng Client DHCP.
+    \end{itemize}
+    
+    \item \textbf{Hoạt động trong điều kiện chưa có IP:}
+    \begin{itemize}
+        \item DHCP Request là một phần của quá trình DORA (thường xảy ra sau Discover/Offer). Trong bước Request, Host Client vẫn đang sử dụng Source IP là 0.0.0.0 (vì chưa có IP chính thức).
+        
+        \item Trong tình huống mà thông tin Lớp Mạng không đầy đủ, việc sử dụng cổng cố định Port 68 là quan trọng. Nó đảm bảo rằng khi Server phản hồi lại bằng gói DHCP ACK, nó biết chính xác Port nào (Port 68) mà ứng dụng DHCP Client đang lắng nghe trên Host.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Vai trò của tính chất phi kết nối Của UDP:}
+
+UDP là giao thức phi kết nối (connectionless) và không trạng thái (stateless). Chính tính chất này giúp việc sử dụng các cổng cố định trở nên đơn giản và mạnh mẽ trong DHCP.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3.5cm}|p{5cm}|p{4.5cm}|}
+\hline
+\textbf{Đặc điểm của UDP} & \textbf{Ứng dụng trong DHCP} & \textbf{Lợi ích} \\
+\hline
+Không bắt tay 3 bước & Client gửi Discover ngay lập tức (DHCP Discover) mà không cần thiết lập kết nối trước & Giảm overhead mạng, tăng tốc độ khởi động (bootstrap) cho Client \\
+\hline
+Không trạng thái (Stateless) & Mỗi message DHCP độc lập (Discover, Offer, Request, ACK) & Server không cần lưu trữ trạng thái kết nối (connection state) hoặc phiên làm việc (session state), giúp tăng khả năng mở rộng (scalability) \\
+\hline
+Không có sequence number & Không cần theo dõi thứ tự của các gói tin gửi/nhận & Đơn giản hóa việc triển khai (implementation) cả ở Client và Server; giảm thiểu xử lý ở tầng giao vận \\
+\hline
+Không có acknowledgment (ACK) & DHCP sử dụng Application-level ACK & Linh hoạt trong cơ chế thử lại (retry mechanism) và quản lý thời gian chờ (timeout) do bản thân DHCP tự xử lý logic độ tin cậy \\
+\hline
+\end{tabular}
+\caption{Tính chất phi kết nối của UDP trong DHCP}
+\end{table}
+
+\newpage
+\subsubsection{Câu 5: Checksum UDP và xử lý lỗi}
+\textbf{Câu hỏi:} Kiểm tra trường Checksum UDP trong gói DHCP Discover. Nếu Checksum không chính xác, Lớp Giao vận (Transport Layer) sẽ thực hiện hành động gì?
+
+\textbf{Trả lời:}
+
+\textbf{a. Trạng thái Checksum trong gói DHCP Discover:}
+
+Trong gói tin DHCP Discover, khi mở rộng lớp User Datagram Protocol (UDP), trường Checksum hiển thị như sau:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part2_question5.png}
+    \caption{Trường Checksum UDP trong gói DHCP Discover}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Giá trị Checksum:} 0xd490
+    \item \textbf{Trạng thái:} [unverified]
+    \item \textbf{Checksum Status:} Unverified
+\end{itemize}
+
+\textbf{Kết luận:} Wireshark không thể xác minh được tính toàn vẹn của Checksum, do đó không hiển thị trạng thái "good" hay "incorrect".
+
+\textbf{Nguyên nhân kỹ thuật (Checksum Offloading):}
+
+\begin{itemize}
+    \item \textbf{Checksum Offloading} là kỹ thuật tối ưu hóa hiệu suất, trong đó việc tính toán checksum được chuyển giao (offload) từ CPU sang phần cứng của card mạng (NIC).
+    
+    \item \textbf{Hậu quả khi Capture:} Wireshark, chạy ở Lớp Liên kết dữ liệu (Data Link Layer) hoặc ngay trên Lớp Mạng (Network Layer), bắt giữ gói tin trước khi card mạng NIC kịp hoàn thành việc tính toán Checksum. Do đó, giá trị Checksum mà Wireshark ghi lại có thể là giá trị tạm thời, không chính xác, hoặc chỉ là giá trị unverified (0xd490), khiến Wireshark không thể xác minh tính toàn vẹn của gói tin.
+\end{itemize}
+
+\textbf{b. Hành động của Transport Layer khi Checksum không chính xác:}
+
+Nếu Checksum của gói tin DHCP Discover được tính toán là không chính xác (incorrect), Lớp Giao vận (UDP handler) của bên nhận sẽ ngay lập tức hủy gói tin, UDP handler sẽ loại bỏ (drop) gói tin đó tại lớp Transport và không chuyển dữ liệu lên DHCP Server.
+
+\textbf{Lý do:}
+\begin{itemize}
+    \item \textbf{Tính toàn vẹn dữ liệu:} Checksum được sử dụng để kiểm tra tính toàn vẹn (integrity) của dữ liệu. Nếu Checksum bị sai, điều đó có nghĩa là dữ liệu bên trong gói tin đã bị thay đổi hoặc hỏng trong quá trình truyền tải.
+    
+    \item \textbf{Không có cơ chế sửa lỗi:} UDP là giao thức phi kết nối (connectionless) và không đáng tin cậy (unreliable). Không giống như TCP, UDP không có cơ chế sửa lỗi, không có khả năng yêu cầu gửi lại gói tin, hay thông báo lỗi cho bên gửi. Do đó, hành động duy nhất và bắt buộc là loại bỏ gói tin bị lỗi để tránh chuyển dữ liệu hỏng.
+\end{itemize}
+
+\textbf{Lý do quá trình DHCP bị đình trệ (stall):}
+
+\begin{itemize}
+    \item \textbf{Gói Discover không đến được Server:} Gói DHCP Discover bị loại bỏ ở Lớp Giao vận (Transport Layer) của Server, nghĩa là DHCP Server không bao giờ nhận được yêu cầu cấp IP từ Client.
+    
+    \item \textbf{Không có phản hồi Offer:} Nếu Server không nhận được gói Discover, nó sẽ không thể tạo và gửi gói DHCP Offer cho Client.
+    
+    \item \textbf{Hết thời gian chờ (Timeout) của Client:} Host Client sẽ tiếp tục chờ gói DHCP Offer. Khi hết thời gian chờ, Client sẽ tự động gửi lại gói DHCP Discover. Nếu gói này tiếp tục bị lỗi Checksum, quá trình sẽ lặp lại cho đến khi Client từ bỏ và chuyển sang sử dụng địa chỉ APIPA (169.254.x.x), và chỉ có thể giao tiếp với thiết bị khác có APIPA trong cùng subnet.
+\end{itemize}
+
+\newpage
+\section{Phần 3: Phân Tích Lớp Mạng và Lớp Liên Kết}
+
+\subsection{Mô tả các bước thực hiện}
+\begin{itemize}
+    \item \textbf{Bước 1:} Tìm địa chỉ Default Gateway bằng lệnh \texttt{ipconfig}.
+    \item \textbf{Bước 2:} Bắt đầu capture trong Wireshark.
+    \item \textbf{Bước 3:} Chạy lệnh \texttt{nslookup google.com 8.8.8.8} để thực hiện DNS query.
+    \item \textbf{Bước 4:} Dừng capture.
+    \item \textbf{Bước 5:} Áp dụng bộ lọc \texttt{dns} để chỉ hiển thị các gói tin DNS.
+\end{itemize}
+
+\subsection{Câu hỏi phân tích và trả lời}
+
+\subsubsection{Câu 1: Địa chỉ IP trong DNS Query}
+\textbf{Câu hỏi:} Địa chỉ IP Nguồn và Đích của gói DNS Query là gì? Giải thích tại sao các địa chỉ IP này không thay đổi khi gói tin đi qua Internet.
+
+\textbf{Trả lời:}
+
+Trong gói DNS Query gửi tới Google DNS (gói số 181 trong hình):
+\begin{itemize}
+    \item \textbf{Source IP:} \texttt{172.20.10.4} → Địa chỉ IP của laptop (Wi-Fi).
+    \item \textbf{Destination IP:} \texttt{8.8.8.8} → Google Public DNS.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part3_question1.png}
+    \caption{Gói DNS Query gửi tới Google DNS (8.8.8.8)}
+    \label{fig:dns_query}
+\end{figure}
+
+\textbf{Vì sao 2 địa chỉ IP này "giữ nguyên" khi đi qua Internet?}
+
+Việc địa chỉ IP Nguồn (Source IP Address) và địa chỉ IP Đích (Destination IP Address) không thay đổi khi gói tin (datagram) di chuyển qua Internet đến máy chủ DNS của Google là do nguyên tắc hoạt động cơ bản của Lớp Mạng (Network Layer) và Giao thức IP (Internet Protocol).
+
+\paragraph{Vai trò của Địa chỉ IP tại Lớp Mạng:}
+\begin{itemize}
+    \item Địa chỉ IP được sử dụng để định danh host. Cụ thể hơn, địa chỉ IP được gán cho giao diện (interface) của host hoặc router.
+    \item Lớp Mạng có trách nhiệm chính là di chuyển các gói tin lớp mạng, được gọi là datagram, từ host gửi đến host nhận.
+    \item Giao thức IP cung cấp dịch vụ truyền thông logic giữa các host (logical communication between hosts).
+    \item Khi host nguồn tạo một datagram, nó sẽ chèn địa chỉ IP của mình vào trường Địa chỉ IP Nguồn (Source IP address) và chèn địa chỉ IP của đích đến cuối cùng (Google DNS server) vào trường Địa chỉ IP Đích (Destination IP address) trong header IP.
+\end{itemize}
+
+\paragraph{Router chỉ thực hiện Chuyển tiếp (Forwarding) dựa trên Địa chỉ Đích:}
+\begin{itemize}
+    \item Khi datagram di chuyển qua Mạng lõi (Network Core) của Internet, nó sẽ đi qua một chuỗi các router (bộ chuyển mạch gói - packet switches).
+    \item Router, vốn là các thiết bị Lớp 3 (network-layer devices), chỉ thực hiện chức năng chuyển tiếp (forwarding). Chuyển tiếp là hành động cục bộ của router nhằm chuyển gói tin từ giao diện đầu vào sang giao diện đầu ra thích hợp.
+    \item Router kiểm tra một phần địa chỉ đích của gói tin và sử dụng bảng chuyển tiếp (forwarding table) của mình, ánh xạ địa chỉ đích tới các liên kết gửi đi, để xác định liên kết mà gói tin nên được chuyển tiếp tới.
+    \item Các router trung gian không can thiệp vào các trường địa chỉ IP Nguồn và Địa chỉ IP Đích vì chúng chỉ quan tâm đến việc chuyển gói tin đến host cuối cùng. Các router hành động chỉ dựa trên các trường lớp mạng của datagram.
+    \item Nói cách khác, IP được thiết kế như một dịch vụ vận chuyển đầu cuối (end-to-end): địa chỉ nguồn và đích được thiết lập tại hai host cuối và duy trì không đổi trong suốt hành trình giữa chúng.
+\end{itemize}
+
+\textbf{Kết luận:} Địa chỉ IP Nguồn và Đích đại diện cho các điểm cuối logic (end-to-end logical endpoints) của phiên truyền thông. Các router chỉ đọc các địa chỉ này để quyết định cách thức chuyển tiếp gói tin đến đích, nhưng chúng không được phép thay đổi các định danh host cuối cùng này, đảm bảo gói tin được chuyển giao đến đúng host đích (máy chủ DNS của Google) theo định nghĩa của Giao thức IP.
+
+\newpage
+\subsubsection{Câu 2: Time to Live (TTL)}
+\textbf{Câu hỏi:} Giá trị ban đầu của trường Time to Live (TTL) trong gói DNS Query là bao nhiêu? Router/Gateway thay đổi giá trị này như thế nào khi chuyển tiếp gói tin?
+
+\textbf{Trả lời:}
+
+Trường TTL của gói DNS Query được quan sát trong IP header như hình dưới. Gói tin được gửi đi với \textbf{TTL = 128}, là giá trị mặc định của hệ điều hành tại máy nguồn.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part3_question2.png}
+    \caption{Trường TTL trong IP header của gói DNS Query}
+    \label{fig:ttl_header}
+\end{figure}
+
+\paragraph{Ý nghĩa TTL ban đầu:}
+\begin{itemize}
+    \item TTL được thiết lập bởi host nguồn khi gói tin IP được tạo ra (ví dụ 64, 128,... tùy hệ điều hành).
+    \item \textbf{Mục đích:} TTL được đưa vào để đảm bảo rằng các gói tin không lưu hành vĩnh viễn (circulate forever) trong mạng. Tình trạng lưu hành vĩnh viễn có thể xảy ra do các vòng lặp định tuyến (long-lived routing loop) tồn tại.
+    \item \textbf{Chức năng:} Giá trị TTL ban đầu được sử dụng để giới hạn số bước nhảy (hop) tối đa mà gói tin được phép đi qua trên đường đi từ nguồn đến đích.
+    \item \textbf{Cách hoạt động:}
+    \begin{itemize}
+        \item Mỗi khi gói tin được xử lý bởi một router, giá trị TTL sẽ giảm đi một đơn vị (decremented by one).
+        \item Nếu trường TTL đạt đến giá trị 0, router phải loại bỏ (dropped) gói tin đó.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Router/gateway xử lý TTL thế nào?}\mbox{}
+
+Quy trình xử lý trường Time to Live (TTL) của một gói IP tại router/gateway:
+
+\begin{itemize}
+    \item \textbf{Bước 1:} Router/gateway nhận một gói IP tại một giao diện mạng (interface) đầu vào.
+    
+    \item \textbf{Bước 2:} Thiết bị trích xuất và đọc giá trị Time to Live (TTL) hiện tại từ tiêu đề IPv4 của gói tin.
+    
+    \item \textbf{Bước 3:} Giảm giá trị TTL theo quy tắc:
+    \begin{equation}
+        \text{TTL}_{\text{new}} = \text{TTL}_{\text{old}} - 1
+    \end{equation}
+    mỗi khi gói tin được xử lý bởi một router. Việc thay đổi giá trị TTL này có một hệ quả trực tiếp đối với router: \textit{Header checksum} (Mã kiểm tra Tiêu đề) phải được tính toán lại và lưu trữ lại tại mỗi router bởi vì trường TTL đã thay đổi.
+    
+    \item \textbf{Bước 4:} Kiểm tra điều kiện TTL mới:
+    \begin{itemize}
+        \item Nếu $\text{TTL}_{\text{new}} > 0$ thì Router coi gói tin vẫn còn hợp lệ và tiếp tục chuyển tiếp (forward) gói này tới nút kế tiếp (next hop) dựa trên bảng định tuyến.
+        \item Nếu $\text{TTL}_{\text{new}} = 0$ thì Router loại bỏ (drop) gói tin, đồng thời, trong đa số trường hợp, phát sinh một thông điệp ICMP "Time Exceeded" gửi trở lại địa chỉ IP nguồn để thông báo rằng gói tin không thể đến được đích do đã vượt quá giới hạn TTL cho phép.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\subsubsection{Câu 3: Địa chỉ MAC của Router/Gateway}
+\textbf{Câu hỏi:} Địa chỉ MAC của router/gateway là gì?
+
+\textbf{Trả lời:}
+
+\begin{itemize}
+    \item Địa chỉ IP của router sau khi nhập lệnh \texttt{ipconfig} từ Command Prompt là \texttt{192.168.0.1}:
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{part3_question3_1.png}
+        \caption{Kết quả lệnh ipconfig - Địa chỉ IP của router}
+        \label{fig:ipconfig_router}
+    \end{figure}
+    
+    \item Địa chỉ MAC của router/gateway từ Command Prompt sau khi gõ lệnh \texttt{arp -a} là \texttt{5c-a6-e6-e1-90-01}:
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{part3_question3_2.png}
+        \caption{Kết quả lệnh arp -a - Địa chỉ MAC của router/gateway}
+        \label{fig:arp_router}
+    \end{figure}
+\end{itemize}
+
+\newpage
+\subsubsection{Câu 4: Địa chỉ trong Link Layer Header}
+\textbf{Câu hỏi:} Địa chỉ Nguồn và Đích trong Link Layer Header (Ethernet) là gì? Chúng khác với địa chỉ IP như thế nào?
+
+\textbf{Trả lời:}
+
+Trong header Ethernet (Link Layer) của gói DNS Query, địa chỉ Nguồn và địa chỉ Đích là:
+
+\begin{itemize}
+    \item \textbf{Source MAC:} \texttt{08-6A-C5-BE-FE-60} → card Wi-Fi của laptop.
+    \item \textbf{Destination MAC:} \texttt{7A-A7-C7-F3-78-6d} → router/gateway Wi-Fi.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part3_question4.png}
+    \caption{Ethernet header của gói DNS Query - Địa chỉ MAC nguồn và đích}
+    \label{fig:ethernet_header}
+\end{figure}
+
+\noindent\textbf{So sánh địa chỉ MAC và địa chỉ IP:}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|p{2.5cm}|p{5.5cm}|p{5.5cm}|}
+\hline
+\textbf{Đặc điểm} & \textbf{Địa chỉ MAC (Lớp Liên kết / Lớp 2)} & \textbf{Địa chỉ IP (Lớp Mạng / Lớp 3)} \\ \hline
+\textbf{Phạm vi} & Chỉ sử dụng trong \textbf{mạng cục bộ} (Local Network Segment). Gói tin cần đổi MAC ở mỗi bước nhảy (hop) khi đi qua router. & Sử dụng trên \textbf{toàn cầu} (Internet). Địa chỉ IP Nguồn và Đích không thay đổi từ máy gửi đến máy nhận cuối cùng (trừ khi có NAT). \\ \hline
+\textbf{Cấp phát} & Được \textbf{nhà sản xuất} thiết bị mạng gán có định (Physical Address) và thường là duy nhất trên toàn thế giới. & Được \textbf{Quản trị viên Mạng/ISP} hoặc máy chủ DHCP cấp phát (Logical Address) và có thể thay đổi. \\ \hline
+\textbf{Định dạng} & \textbf{48 bit}, thường được viết dưới dạng 6 nhóm 2 ký tự hệ thập lục phân (Hex), cách nhau bằng dấu gạch ngang hoặc dấu hai chấm (ví dụ: \texttt{00:6a:c5:be:fe:60}). & \textbf{32 bit} (IPv4) hoặc \textbf{128 bit} (IPv6), thường được viết dưới dạng thập phân có dấu chấm (ví dụ: \texttt{172.20.10.4}). \\ \hline
+\textbf{Mục đích} & Cho phép các thiết bị vật lý \textbf{trong cùng một mạng} tìm thấy nhau để truyền gói tin. & Cho phép xác định \textbf{vị trí logic} của mạng và máy chủ trên mạng toàn cầu. \\ \hline
+\end{tabular}
+\caption{So sánh địa chỉ MAC và địa chỉ IP}
+\label{tab:mac_vs_ip}
+\end{table}
+
+\newpage
+\subsubsection{Câu 5: Trường Type trong Link Layer Header}
+\textbf{Câu hỏi:} Giá trị của trường Type trong Link Layer header là gì và ý nghĩa của nó là gì?
+
+\textbf{Trả lời:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part3_question5.png}
+    \caption{Trường Type trong Ethernet header}
+    \label{fig:ethernet_type}
+\end{figure}
+
+Giá trị \texttt{0x0800} là một mã chuẩn (EtherType) và nó cho thiết bị nhận (router/gateway hoặc thiết bị mạng kế tiếp) biết thông tin quan trọng sau:
+
+\begin{itemize}
+    \item \textbf{Giao thức Tiếp theo:} Nó chỉ ra rằng giao thức được đóng gói (encapsulated) ngay sau tiêu đề Ethernet là Giao thức Internet phiên bản 4 (IPv4).
+    \item \textbf{Chức năng Phân phối:} Sau khi nhận được gói tin, router sẽ nhìn vào giá trị này để biết rằng nó cần chuyển gói dữ liệu này lên Lớp Mạng (Layer 3) và xử lý nó bằng cách sử dụng logic của giao thức IP.
+\end{itemize}
+
+\noindent\textbf{Ví dụ các giá trị EtherType phổ biến:}
+\begin{itemize}
+    \item \texttt{0x0800} → IPv4
+    \item \texttt{0x86DD} → IPv6
+    \item \texttt{0x0806} → ARP
+\end{itemize}
+
+\newpage
+\section{Kết luận}
+Qua quá trình thực hiện dự án phân tích gói tin mạng với Wireshark, nhóm đã thu được những kiến thức và kinh nghiệm thực tế quý báu về cách thức hoạt động của các giao thức mạng ở nhiều tầng khác nhau. Những bài học quan trọng nhất bao gồm:
+
+\subsection{Từ Phần 1: HTTP Traffic Analysis}
+
+\begin{itemize}
+    \item \textbf{Cơ chế tối ưu hiệu năng của trình duyệt (Concurrency):} Em nhận thấy trình duyệt không tải dữ liệu một cách tuần tự mà thực hiện tải song song các tài nguyên (như hình ảnh) để giảm độ trễ.
+    
+    \item \textbf{Quy trình thiết lập kết nối tin cậy (3-Way Handshake):} Trước khi bất kỳ dữ liệu HTTP nào (như GET request) được truyền đi, em thấy rõ quy trình "bắt tay ba bước" để đồng bộ hóa. Điều này đảm bảo kết nối được thiết lập chắc chắn trước khi trao đổi dữ liệu tầng ứng dụng.
+    
+    \item \textbf{Vai trò của Window Size trong tầng giao vận (Flow Control):} Thông qua giá trị Calculated window size, em hiểu được cách TCP thực hiện kiểm soát luồng. Giá trị này thông báo cho bên gửi biết dung lượng bộ nhớ đệm còn trống của bên nhận. Đây là cơ chế thiết yếu để ngăn chặn việc gửi dữ liệu quá nhanh gây tràn bộ đệm (buffer overflow), từ đó giảm thiểu việc mất gói tin và tắc nghẽn mạng.
+\end{itemize}
+
+\subsection{Từ Phần 2: DHCP Traffic Analysis}
+
+\begin{itemize}
+    \item \textbf{Hiểu rõ quy trình cấp phát địa chỉ IP qua DHCP (DORA) và cách thức vận hành của từng gói tin:} Qua Wireshark, quá trình Discover $\rightarrow$ Offer $\rightarrow$ Request $\rightarrow$ ACK được quan sát trực quan, giúp hiểu chính xác thời điểm máy khách chưa có IP, thời điểm server đề xuất IP, cũng như sự khác biệt giữa broadcast/unicast trong từng bước.
+    
+    \item \textbf{Nhận diện vai trò của ARP trong quá trình xác minh IP sau DHCP:} Dù ARP không xuất hiện trong DORA, các gói ARP Probe và ARP Announcement xuất hiện ngay sau DHCP ACK cho thấy vai trò quan trọng của ARP trong kiểm tra xung đột IP và phân giải MAC của Default Gateway.
+    
+    \item \textbf{Nắm được các cơ chế kỹ thuật thực tế của hệ thống mạng:} Kết quả phân tích làm rõ các cơ chế như: Checksum Offloading, cách DHCP xử lý xung đột IP, và lý do sử dụng cổng UDP cố định 67–68 để đảm bảo tính thống nhất, đơn giản và tin cậy trong môi trường chưa có IP.
+\end{itemize}
+
+\subsection{Từ Phần 3: Network \& Link Layer Analysis}
+
+\begin{itemize}
+    \item \textbf{Hiểu rõ sự khác biệt và vai trò của IP và MAC:} Qua bài tập, em hiểu rõ rằng IP là địa chỉ logic dùng để định tuyến end-to-end, nên không thay đổi khi đi qua Internet; còn MAC là địa chỉ vật lý trong LAN, và sẽ thay đổi ở mỗi hop. Điều này giúp em nắm chắc mối quan hệ giữa Layer 2 và Layer 3 trong mạng.
+    
+    \item \textbf{Nắm vững cơ chế TTL và lý do phải giảm tại mỗi router:} TTL giúp ngăn gói tin chạy vòng lặp vô hạn. Mỗi router giảm TTL xuống 1; nếu TTL = 0, gói bị drop và gửi ICMP Time Exceeded. Bài tập giúp em hiểu chính xác cách router xử lý gói IP và vì sao TTL là thông số quan trọng khi phân tích mạng.
+    
+    \item \textbf{Biết cách phân tích gói tin và xác định router/gateway bằng Wireshark:} Em học được cách dùng Wireshark và \texttt{arp -a} để nhận diện MAC của gateway, đọc Ethernet header, EtherType và các trường IP/UDP/DNS. Nhờ đó, em tự tin hơn trong việc phân tích các gói tin và hiểu rõ quá trình encapsulation từ Layer 2 $\rightarrow$ Layer 3 $\rightarrow$ Layer 4 $\rightarrow$ Layer 7.
+\end{itemize}
+
+Dự án này không chỉ củng cố kiến thức lý thuyết mà còn trang bị cho nhóm các kỹ năng thực hành cần thiết trong việc giám sát, phân tích và khắc phục sự cố mạng.
+
+\newpage
+\section{Phụ lục}
+
+\subsection{Yêu cầu nộp bài}
+
+Mỗi nhóm sinh viên cần nộp các tài liệu sau cho từng phần của dự án:
+
+\begin{itemize}
+    \item \textbf{Screenshots:} Các ảnh chụp màn hình có liên quan đến giao diện Wireshark, bao gồm các gói tin đã capture, bộ lọc đã áp dụng, và chi tiết các trường gói tin đã được mở rộng theo yêu cầu của từng câu hỏi.
+    
+    \item \textbf{Answers to Questions:} Câu trả lời rõ ràng và súc tích cho tất cả các câu hỏi phân tích trong từng phần của dự án.
+    
+    \item \textbf{Saved Capture Files:} Các file capture đã lưu dưới định dạng \texttt{.pcapng} cho từng phần thực hành.
+\end{itemize}
+
+\noindent\textbf{Cấu trúc thư mục nộp bài:}
+
+Nộp file \texttt{<StudentID1-StudentID2-StudentID3>.zip}, được tạo bằng cách nén thư mục có tên \texttt{<StudentID1-StudentID2-StudentID3>} với cấu trúc như sau:
+
+\begin{verbatim}
+<StudentID1-StudentID2-StudentID3>/          <-- main folder
+|
++-- report.pdf                               <-- lab report
++-- packets/                                 <-- packets folder
+    +-- part1.pcapng                         <-- HTTP capture
+    +-- part2.pcapng                         <-- DHCP capture
+    +-- part3.pcapng                         <-- Network & Link Layer capture
+\end{verbatim}
+
+\subsection{Tiêu chí đánh giá}
+\begin{itemize}
+    \item \textbf{Tính rõ ràng và súc tích:} Câu trả lời phải ngắn gọn, dễ hiểu và đi thẳng vào vấn đề.
+    \item \textbf{Tính đầy đủ:} Đảm bảo trả lời đầy đủ tất cả các câu hỏi và cung cấp bằng chứng (screenshot, số liệu) cụ thể.
+    \item \textbf{Hiểu biết kỹ thuật:} Thể hiện sự hiểu biết vững chắc về giao thức mạng và chức năng của Wireshark.
+    \item \textbf{Trình bày:} Báo cáo được trình bày chuyên nghiệp, có cấu trúc logic và dễ theo dõi.
+\end{itemize}
+
+\newpage
+\section{Tài liệu tham khảo}
+
+\begin{enumerate}
+    \item Kurose, J. F., \& Ross, K. W. (2021). \textit{Computer Networking: A Top-Down Approach} (7th ed.). Pearson.
+    
+    \item Kurose, J. F., \& Ross, K. W. (2005-2016). \textit{Wireshark Lab: HTTP v7.0}. Supplement to Computer Networking: A Top-Down Approach (7th ed.).
+    
+    \item Kurose, J. F., \& Ross, K. W. (2005-2016). \textit{Wireshark Lab: DHCP v7.0}. Supplement to Computer Networking: A Top-Down Approach (7th ed.).
+    
+    \item Kurose, J. F., \& Ross, K. W. (2005-2016). \textit{Wireshark Lab: DNS v7.0}. Supplement to Computer Networking: A Top-Down Approach (7th ed.).
+    
+    \item Giới Thiệu về Mạng Máy Tính. (2024). \textit{Wireshark Network Analysis Tutorial} [Video]. YouTube. Retrieved from \url{https://www.youtube.com/watch?v=qTaOZrDnMzQ}
+    
+    \item PowerCert Animated Videos. (2024). \textit{DHCP Explained - Dynamic Host Configuration Protocol} [Video]. YouTube. Retrieved from \url{https://www.youtube.com/watch?v=TkCSr30UojM}
+    
+\end{enumerate}
+
+\end{document}
