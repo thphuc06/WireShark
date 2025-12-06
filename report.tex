@@ -163,18 +163,17 @@ Wireshark là một công cụ phân tích gói tin mạng mã nguồn mở, cho
     \label{fig:http_get_requests}
 \end{figure}
 
-Có tổng cộng 3 yêu cầu HTTP GET được trình duyệt gửi đi, không tính \texttt{favicon.ico}:
+Có tổng cộng 4 yêu cầu HTTP GET được trình duyệt gửi đi:
 \begin{itemize}
     \item \texttt{GET /wireshark-labs/HTTP-wireshark-file4.html HTTP/1.1}
     \item \texttt{GET /pearson.png HTTP/1.1}
     \item \texttt{GET /8E\_cover\_small.jpg HTTP/1.1}
+    \item \texttt{GET /favicon.ico HTTP/1.1}
 \end{itemize}
-
-\noindent\textit{(Note: You should ignore any HTTP GET and response for \texttt{favicon.ico}. If you see a reference to this file, it is your browser automatically asking the server if it (the server) has a small icon file that should be displayed next to the displayed URL in your browser. We'll ignore references to this pesky file in this lab.)} (Ross, 2005-2016)
 
 Các yêu cầu này được gửi đến 2 địa chỉ Internet khác nhau:
 \begin{itemize}
-    \item \texttt{128.119.245.12} - cho file HTML và \texttt{pearson.png}
+    \item \texttt{128.119.245.12} - cho file HTML, \texttt{pearson.png} và \texttt{favicon.ico}
     \item \texttt{2.56.99.24} - cho \texttt{8E\_cover\_small.jpg}
 \end{itemize}
 
@@ -229,6 +228,7 @@ Khi nhìn vào HTTP Packet List, ta thấy các gói GET request xuất hiện c
     \item Gói 956 (4.819s): \texttt{GET pearson.png} $\rightarrow$ Server \texttt{128.119.245.12}
     \item Gói 992 (5.062s): Nhận 301 Response từ Server \texttt{128.119.245.12}
     \item Gói 996 (5.115s): \texttt{GET 8E\_cover\_small.jpg} $\rightarrow$ Server \texttt{2.56.99.24}
+    \item Gói 1929 (6.812s): \texttt{GET favicon.ico} $\rightarrow$ Server \texttt{2.56.99.24}
 \end{itemize}
 
 \begin{figure}[H]
