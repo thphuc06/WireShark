@@ -95,7 +95,7 @@
 
     \begin{center}
         \includegraphics[width=6cm]{LOGO.png} \\[1cm]
-        Ngày 21 tháng 12 năm 2024
+        Ngày 4 tháng 12 năm 2024
     \end{center}
     
     \thispagestyle{empty}  % Đảm bảo không có header/footer trên trang bìa
@@ -707,14 +707,17 @@ Nếu Checksum của gói tin DHCP Discover được tính toán là không chí
 \subsection{Câu hỏi phân tích và trả lời}
 
 \subsubsection{Câu 1: Địa chỉ IP trong DNS Query}
-\textbf{Câu hỏi:} Địa chỉ IP Nguồn và Đích của gói DNS Query là gì? Giải thích tại sao các địa chỉ IP này không thay đổi khi gói tin đi qua Internet.
-
+\textbf{Câu hỏi:} Địa chỉ IP nguồn/đích:\\
+    Xác định gói tin DNS Query được gửi từ host của bạn tới máy chủ Google DNS.\\
+    Địa chỉ IP nguồn là gì?\\
+    Địa chỉ IP đích là gì?\\
+    Giải thích vì sao các địa chỉ IP nguồn và đích này vẫn giữ nguyên khi gói tin truyền qua Internet đến máy chủ Google DNS.\\
 \textbf{Trả lời:}
 
 Trong gói DNS Query gửi tới Google DNS (gói số 181 trong hình):
 \begin{itemize}
-    \item \textbf{Source IP:} \texttt{172.20.10.4} → Địa chỉ IP của laptop (Wi-Fi).
-    \item \textbf{Destination IP:} \texttt{8.8.8.8} → Google Public DNS.
+    \item \textbf{Địa chỉ IP nguồn:} \texttt{192.168.0.103} → Địa chỉ IPv4 của Wi-Fi.
+    \item \textbf{Địa chỉ IP đích:} \texttt{8.8.8.8} → Google Public DNS.
 \end{itemize}
 
 \begin{figure}[H]
@@ -726,84 +729,73 @@ Trong gói DNS Query gửi tới Google DNS (gói số 181 trong hình):
 
 \textbf{Vì sao 2 địa chỉ IP này "giữ nguyên" khi đi qua Internet?}
 
-Việc địa chỉ IP Nguồn (Source IP Address) và địa chỉ IP Đích (Destination IP Address) không thay đổi khi gói tin (datagram) di chuyển qua Internet đến máy chủ DNS của Google là do nguyên tắc hoạt động cơ bản của Lớp Mạng (Network Layer) và Giao thức IP (Internet Protocol).
 
-\paragraph{Vai trò của Địa chỉ IP tại Lớp Mạng:}
-\begin{itemize}
-    \item Địa chỉ IP được sử dụng để định danh host. Cụ thể hơn, địa chỉ IP được gán cho giao diện (interface) của host hoặc router.
-    \item Lớp Mạng có trách nhiệm chính là di chuyển các gói tin lớp mạng, được gọi là datagram, từ host gửi đến host nhận.
-    \item Giao thức IP cung cấp dịch vụ truyền thông logic giữa các host (logical communication between hosts).
-    \item Khi host nguồn tạo một datagram, nó sẽ chèn địa chỉ IP của mình vào trường Địa chỉ IP Nguồn (Source IP address) và chèn địa chỉ IP của đích đến cuối cùng (Google DNS server) vào trường Địa chỉ IP Đích (Destination IP address) trong header IP.
-\end{itemize}
-
-\paragraph{Router chỉ thực hiện Chuyển tiếp (Forwarding) dựa trên Địa chỉ Đích:}
-\begin{itemize}
-    \item Khi datagram di chuyển qua Mạng lõi (Network Core) của Internet, nó sẽ đi qua một chuỗi các router (bộ chuyển mạch gói - packet switches).
-    \item Router, vốn là các thiết bị Lớp 3 (network-layer devices), chỉ thực hiện chức năng chuyển tiếp (forwarding). Chuyển tiếp là hành động cục bộ của router nhằm chuyển gói tin từ giao diện đầu vào sang giao diện đầu ra thích hợp.
-    \item Router kiểm tra một phần địa chỉ đích của gói tin và sử dụng bảng chuyển tiếp (forwarding table) của mình, ánh xạ địa chỉ đích tới các liên kết gửi đi, để xác định liên kết mà gói tin nên được chuyển tiếp tới.
-    \item Các router trung gian không can thiệp vào các trường địa chỉ IP Nguồn và Địa chỉ IP Đích vì chúng chỉ quan tâm đến việc chuyển gói tin đến host cuối cùng. Các router hành động chỉ dựa trên các trường lớp mạng của datagram.
-    \item Nói cách khác, IP được thiết kế như một dịch vụ vận chuyển đầu cuối (end-to-end): địa chỉ nguồn và đích được thiết lập tại hai host cuối và duy trì không đổi trong suốt hành trình giữa chúng.
-\end{itemize}
-
-\textbf{Kết luận:} Địa chỉ IP Nguồn và Đích đại diện cho các điểm cuối logic (end-to-end logical endpoints) của phiên truyền thông. Các router chỉ đọc các địa chỉ này để quyết định cách thức chuyển tiếp gói tin đến đích, nhưng chúng không được phép thay đổi các định danh host cuối cùng này, đảm bảo gói tin được chuyển giao đến đúng host đích (máy chủ DNS của Google) theo định nghĩa của Giao thức IP.
+Việc địa chỉ IP Nguồn (Source IP Address) và địa chỉ IP Đích (Destination IP Address) không thay đổi khi gói tin đi qua Internet là một nguyên tắc cốt lõi của thiết kế lớp Mạng (Network Layer), đảm bảo dịch vụ truyền thông end-to-end (từ đầu cuối đến đầu cuối) trên toàn mạng lưới.
+    \begin{itemize}
+        \item Khi host nguồn tạo datagram, nó gán IP nguồn là địa chỉ IP của chính nó và IP đích là địa chỉ IP của host đích cuối cùng (ở đây là máy chủ DNS 8.8.8.8).
+        \item Các router trung gian chỉ thực hiện chức năng chuyển tiếp (forwarding) cục bộ: chúng đọc trường Địa chỉ IP Đích trong header IP, tra bảng chuyển tiếp (forwarding table) để chọn cổng ra thích hợp, rồi gửi tiếp gói tin.
+        \item Nếu Địa chỉ IP Đích bị thay đổi giữa chừng, các router kế tiếp sẽ mất thông tin cần thiết để định tuyến gói tin đến host nhận cuối cùng. Do đó, Địa chỉ IP Đích phải giữ nguyên từ host nguồn đến host đích.
+        \item Vì vậy, từ lúc rời laptop cho đến khi tới Google DNS, datagram vẫn giữ nguyên cặp địa chỉ IP 192.168.0.103 $\rightarrow$ 8.8.8.8, đảm bảo dịch vụ truyền thông end-to-end giữa hai host.
+    \end{itemize}
 
 \newpage
-\subsubsection{Câu 2: Time to Live (TTL)}
-\textbf{Câu hỏi:} Giá trị ban đầu của trường Time to Live (TTL) trong gói DNS Query là bao nhiêu? Router/Gateway thay đổi giá trị này như thế nào khi chuyển tiếp gói tin?
+\subsubsection{Câu 2: Time To Live (TTL)}
+\textbf{Câu hỏi:} Tìm trường Time to Live (TTL) trong phần tiêu đề IP của gói tin DNS Query. Giá trị TTL ban đầu này biểu thị điều gì, và router/cổng (gateway) cục bộ sẽ điều chỉnh giá trị đó như thế nào khi thực hiện chuyển tiếp (forward) gói tin?\\
+\textbf{Trả lời:} \\
 
-\textbf{Trả lời:}
-
-Trường TTL của gói DNS Query được quan sát trong IP header như hình dưới. Gói tin được gửi đi với \textbf{TTL = 128}, là giá trị mặc định của hệ điều hành tại máy nguồn.
-
+Đầu tiên, lọc gói DNS Query đầu tiên gửi tới máy chủ DNS bằng filter:
+\verb|dns && ip.dst == 8.8.8.8|. Khi mở phần \textbf{Internet Protocol} của gói tin này, trường TTL hiển thị như sau:
+\begin{itemize}
+    \item \texttt{Time to live: 128}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{part3_question2.png}
-    \caption{Trường TTL trong IP header của gói DNS Query}
-    \label{fig:ttl_header}
+    \caption{Gói DNS Query - Trường TTL trong IP header}
+    \label{fig:ttl-dns-query}
 \end{figure}
-
-\paragraph{Ý nghĩa TTL ban đầu:}
-\begin{itemize}
-    \item TTL được thiết lập bởi host nguồn khi gói tin IP được tạo ra (ví dụ 64, 128,... tùy hệ điều hành).
-    \item \textbf{Mục đích:} TTL được đưa vào để đảm bảo rằng các gói tin không lưu hành vĩnh viễn (circulate forever) trong mạng. Tình trạng lưu hành vĩnh viễn có thể xảy ra do các vòng lặp định tuyến (long-lived routing loop) tồn tại.
-    \item \textbf{Chức năng:} Giá trị TTL ban đầu được sử dụng để giới hạn số bước nhảy (hop) tối đa mà gói tin được phép đi qua trên đường đi từ nguồn đến đích.
-    \item \textbf{Cách hoạt động:}
-    \begin{itemize}
-        \item Mỗi khi gói tin được xử lý bởi một router, giá trị TTL sẽ giảm đi một đơn vị (decremented by one).
-        \item Nếu trường TTL đạt đến giá trị 0, router phải loại bỏ (dropped) gói tin đó.
-    \end{itemize}
 \end{itemize}
 
-\paragraph{Router/gateway xử lý TTL thế nào?}\mbox{}
+Giá trị TTL = 128 là \textbf{TTL ban đầu} do host nguồn (máy tính chạy hệ điều hành Windows)
+gán khi tạo IP datagram. Trường TTL cho biết \emph{số bước nhảy tối đa} (max hops) mà gói tin
+được phép đi qua trước khi bị loại bỏ, giúp ngăn chặn các \emph{vòng lặp định tuyến} khiến
+gói tin tồn tại vô hạn trên mạng.
 
-Quy trình xử lý trường Time to Live (TTL) của một gói IP tại router/gateway:
+\medskip
 
-\begin{itemize}
-    \item \textbf{Bước 1:} Router/gateway nhận một gói IP tại một giao diện mạng (interface) đầu vào.
-    
-    \item \textbf{Bước 2:} Thiết bị trích xuất và đọc giá trị Time to Live (TTL) hiện tại từ tiêu đề IPv4 của gói tin.
-    
-    \item \textbf{Bước 3:} Giảm giá trị TTL theo quy tắc:
-    \begin{equation}
-        \text{TTL}_{\text{new}} = \text{TTL}_{\text{old}} - 1
-    \end{equation}
-    mỗi khi gói tin được xử lý bởi một router. Việc thay đổi giá trị TTL này có một hệ quả trực tiếp đối với router: \textit{Header checksum} (Mã kiểm tra Tiêu đề) phải được tính toán lại và lưu trữ lại tại mỗi router bởi vì trường TTL đã thay đổi.
-    
-    \item \textbf{Bước 4:} Kiểm tra điều kiện TTL mới:
+\noindent
+	\textbf{Cách default gateway cục bộ xử lý TTL:}
+Default gateway (router Wi-Fi trong mạng LAN) là \textbf{bước nhảy (hop) đầu tiên} trên
+đường đi của gói DNS Query ra Internet. Tại gateway này, TTL được xử lý theo chuẩn như sau:
+\begin{enumerate}
+    \item Router nhận gói IP với TTL ban đầu là 128.
+    \item Router \textbf{giảm TTL đi 1} rồi mới chuyển tiếp (forward) gói tin:
     \begin{itemize}
-        \item Nếu $\text{TTL}_{\text{new}} > 0$ thì Router coi gói tin vẫn còn hợp lệ và tiếp tục chuyển tiếp (forward) gói này tới nút kế tiếp (next hop) dựa trên bảng định tuyến.
-        \item Nếu $\text{TTL}_{\text{new}} = 0$ thì Router loại bỏ (drop) gói tin, đồng thời, trong đa số trường hợp, phát sinh một thông điệp ICMP "Time Exceeded" gửi trở lại địa chỉ IP nguồn để thông báo rằng gói tin không thể đến được đích do đã vượt quá giới hạn TTL cho phép.
+        \item Khi gói rời khỏi mạng LAN, TTL còn \textbf{127}.
     \end{itemize}
-\end{itemize}
+    \item Mỗi router trung gian tiếp theo trên đường đi tiếp tục lặp lại quy trình này,
+    mỗi hop lại giảm TTL xuống 1.
+    \item Nếu tại một router nào đó, sau khi giảm mà TTL trở thành \textbf{0}, router sẽ:
+    \begin{itemize}
+        \item Loại bỏ (drop) gói tin.
+        \item Gửi ngược về host nguồn một bản tin \texttt{ICMP Time Exceeded} để báo gói tin
+        đã hết “tuổi thọ” trên mạng.
+    \end{itemize}
+\end{enumerate}
+
+Trong capture trên Wireshark, chỉ quan sát được TTL = 128 tại thời điểm gói vừa rời host nguồn.
+Tuy nhiên, về mặt hoạt động chuẩn, ngay khi gói đi qua default gateway cục bộ, TTL của gói DNS
+Query đã được giảm xuống còn 127.
+
 
 \newpage
 \subsubsection{Câu 3: Địa chỉ MAC của Router/Gateway}
-\textbf{Câu hỏi:} Địa chỉ MAC của router/gateway là gì?
+\textbf{Câu hỏi:} Xác định địa chỉ MAC của router/cổng mặc định (gateway) cục bộ của bạn (bằng cách sử dụng lệnh arp -a trong cửa sổ dòng lệnh, hoặc bằng cách tìm địa chỉ MAC gắn với địa chỉ IP gateway trong file bắt gói tin (capture)).\\
 
 \textbf{Trả lời:}
 
 \begin{itemize}
-    \item Địa chỉ IP của router sau khi nhập lệnh \texttt{ipconfig} từ Command Prompt là \texttt{192.168.0.1}:
+    \item Địa chỉ IP của router (Default Gateway) thu được từ lệnh \texttt{ipconfig}
+  trong Command Prompt là \texttt{192.168.0.1}: 
     
     \begin{figure}[H]
         \centering
@@ -812,7 +804,7 @@ Quy trình xử lý trường Time to Live (TTL) của một gói IP tại route
         \label{fig:ipconfig_router}
     \end{figure}
     
-    \item Địa chỉ MAC của router/gateway từ Command Prompt sau khi gõ lệnh \texttt{arp -a} là \texttt{5c-a6-e6-e1-90-01}:
+    \item Địa chỉ MAC của router/gateway cục bộ, xác định từ kết quả lệnh \texttt{arp -a} tương ứng với IP Gateway \texttt{192.168.0.1}, là \texttt{5c-a6-e6-e1-90-01}:
     
     \begin{figure}[H]
         \centering
@@ -824,15 +816,15 @@ Quy trình xử lý trường Time to Live (TTL) của một gói IP tại route
 
 \newpage
 \subsubsection{Câu 4: Địa chỉ trong Link Layer Header}
-\textbf{Câu hỏi:} Địa chỉ Nguồn và Đích trong Link Layer Header (Ethernet) là gì? Chúng khác với địa chỉ IP như thế nào?
+\textbf{Câu hỏi:} Các địa chỉ nguồn và đích trong tiêu đề tầng Liên kết (Link Layer) (Ethernet hoặc 802.11) là gì? Về bản chất, những địa chỉ này khác gì so với các địa chỉ IP mà bạn đã tìm được ở tầng Mạng?
 
 \textbf{Trả lời:}
 
 Trong header Ethernet (Link Layer) của gói DNS Query, địa chỉ Nguồn và địa chỉ Đích là:
 
 \begin{itemize}
-    \item \textbf{Source MAC:} \texttt{08-6A-C5-BE-FE-60} → card Wi-Fi của laptop.
-    \item \textbf{Destination MAC:} \texttt{7A-A7-C7-F3-78-6d} → router/gateway Wi-Fi.
+    \item \textbf{Địa chỉ MAC nguồn:} \texttt{08-6a-c5-be-fe-60} → card Wi-Fi của laptop.
+    \item \textbf{Địa chỉ MAC đích:} \texttt{5c-a6-e6-e1-90-01} → router/gateway Wi-Fi.
 \end{itemize}
 
 \begin{figure}[H]
@@ -861,7 +853,7 @@ Trong header Ethernet (Link Layer) của gói DNS Query, địa chỉ Nguồn v�
 
 \newpage
 \subsubsection{Câu 5: Trường Type trong Link Layer Header}
-\textbf{Câu hỏi:} Giá trị của trường Type trong Link Layer header là gì và ý nghĩa của nó là gì?
+\textbf{Câu hỏi:} Quan sát tiêu đề tầng Liên kết (Ethernet II hoặc tương tự). Giá trị của trường Type là bao nhiêu, và trường này cho thiết bị nhận (router/gateway của bạn) biết điều gì về loại giao thức tầng trên (protocol) nằm ngay sau tiêu đề Ethernet?\\
 
 \textbf{Trả lời:}
 
@@ -893,11 +885,11 @@ Qua quá trình thực hiện dự án phân tích gói tin mạng với Wiresha
 \subsection{Từ Phần 1: HTTP Traffic Analysis}
 
 \begin{itemize}
-    \item \textbf{Cơ chế tối ưu hiệu năng của trình duyệt (Concurrency):} Em nhận thấy trình duyệt không tải dữ liệu một cách tuần tự mà thực hiện tải song song các tài nguyên (như hình ảnh) để giảm độ trễ.
+    \item \textbf{Cơ chế tối ưu hiệu năng của trình duyệt (Concurrency):} Giúp nhận thấy trình duyệt không tải dữ liệu một cách tuần tự mà thực hiện tải song song các tài nguyên (như hình ảnh) để giảm độ trễ.
     
-    \item \textbf{Quy trình thiết lập kết nối tin cậy (3-Way Handshake):} Trước khi bất kỳ dữ liệu HTTP nào (như GET request) được truyền đi, em thấy rõ quy trình "bắt tay ba bước" để đồng bộ hóa. Điều này đảm bảo kết nối được thiết lập chắc chắn trước khi trao đổi dữ liệu tầng ứng dụng.
+    \item \textbf{Quy trình thiết lập kết nối tin cậy (3-Way Handshake):} Trước khi bất kỳ dữ liệu HTTP nào (như GET request) được truyền đi, thấy rõ quy trình "bắt tay ba bước" để đồng bộ hóa. Điều này đảm bảo kết nối được thiết lập chắc chắn trước khi trao đổi dữ liệu tầng ứng dụng.
     
-    \item \textbf{Vai trò của Window Size trong tầng giao vận (Flow Control):} Thông qua giá trị Calculated window size, em hiểu được cách TCP thực hiện kiểm soát luồng. Giá trị này thông báo cho bên gửi biết dung lượng bộ nhớ đệm còn trống của bên nhận. Đây là cơ chế thiết yếu để ngăn chặn việc gửi dữ liệu quá nhanh gây tràn bộ đệm (buffer overflow), từ đó giảm thiểu việc mất gói tin và tắc nghẽn mạng.
+    \item \textbf{Vai trò của Window Size trong tầng giao vận (Flow Control):} Thông qua giá trị Calculated window size, hiểu được cách TCP thực hiện kiểm soát luồng. Giá trị này thông báo cho bên gửi biết dung lượng bộ nhớ đệm còn trống của bên nhận. Đây là cơ chế thiết yếu để ngăn chặn việc gửi dữ liệu quá nhanh gây tràn bộ đệm (buffer overflow), từ đó giảm thiểu việc mất gói tin và tắc nghẽn mạng.
 \end{itemize}
 
 \subsection{Từ Phần 2: DHCP Traffic Analysis}
@@ -913,11 +905,11 @@ Qua quá trình thực hiện dự án phân tích gói tin mạng với Wiresha
 \subsection{Từ Phần 3: Network \& Link Layer Analysis}
 
 \begin{itemize}
-    \item \textbf{Hiểu rõ sự khác biệt và vai trò của IP và MAC:} Qua bài tập, em hiểu rõ rằng IP là địa chỉ logic dùng để định tuyến end-to-end, nên không thay đổi khi đi qua Internet; còn MAC là địa chỉ vật lý trong LAN, và sẽ thay đổi ở mỗi hop. Điều này giúp em nắm chắc mối quan hệ giữa Layer 2 và Layer 3 trong mạng.
+    \item \textbf{Hiểu rõ sự khác biệt và vai trò của IP và MAC:} Qua bài tập giúp hiểu rõ rằng IP là địa chỉ logic dùng để định tuyến end-to-end, nên không thay đổi khi đi qua Internet; còn MAC là địa chỉ vật lý trong LAN, và sẽ thay đổi ở mỗi hop. Điều này giúp em nắm chắc mối quan hệ giữa Layer 2 và Layer 3 trong mạng.
     
-    \item \textbf{Nắm vững cơ chế TTL và lý do phải giảm tại mỗi router:} TTL giúp ngăn gói tin chạy vòng lặp vô hạn. Mỗi router giảm TTL xuống 1; nếu TTL = 0, gói bị drop và gửi ICMP Time Exceeded. Bài tập giúp em hiểu chính xác cách router xử lý gói IP và vì sao TTL là thông số quan trọng khi phân tích mạng.
+    \item \textbf{Nắm vững cơ chế TTL và lý do phải giảm tại mỗi router:} TTL giúp ngăn gói tin chạy vòng lặp vô hạn. Mỗi router giảm TTL xuống 1; nếu TTL = 0, gói bị drop và gửi ICMP Time Exceeded. Bài tập giúp hiểu chính xác cách router xử lý gói IP và vì sao TTL là thông số quan trọng khi phân tích mạng.
     
-    \item \textbf{Biết cách phân tích gói tin và xác định router/gateway bằng Wireshark:} Em học được cách dùng Wireshark và \texttt{arp -a} để nhận diện MAC của gateway, đọc Ethernet header, EtherType và các trường IP/UDP/DNS. Nhờ đó, em tự tin hơn trong việc phân tích các gói tin và hiểu rõ quá trình encapsulation từ Layer 2 $\rightarrow$ Layer 3 $\rightarrow$ Layer 4 $\rightarrow$ Layer 7.
+    \item \textbf{Biết cách phân tích gói tin và xác định router/gateway bằng Wireshark:} Học được cách dùng Wireshark và \texttt{arp -a} để nhận diện MAC của gateway, đọc Ethernet header, EtherType và các trường IP/UDP/DNS. Nhờ đó mà tự tin hơn trong việc phân tích các gói tin và hiểu rõ quá trình encapsulation từ Layer 2 $\rightarrow$ Layer 3 $\rightarrow$ Layer 4 $\rightarrow$ Layer 7.
 \end{itemize}
 
 Dự án này không chỉ củng cố kiến thức lý thuyết mà còn trang bị cho nhóm các kỹ năng thực hành cần thiết trong việc giám sát, phân tích và khắc phục sự cố mạng.
