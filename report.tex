@@ -449,7 +449,7 @@ Trong TCP connection: \texttt{tcp.stream eq 7} (dùng để download file hình 
 
 \textbf{Trả lời:}
 
-Dựa vào các bản ghi phân tích gói tin hiển thị, có thể thấy rằng trong suốt 2 chuỗi giao tiếp DHCP, không có bất kỳ gói tin ARP nào được trao đổi.
+Dựa vào các bản ghi phân tích gói tin hiển thị, có thể thấy rằng trong suốt 2 chuỗi giao tiếp DORA của DHCP, không có bất kỳ gói tin ARP nào được trao đổi.
 
 \begin{figure}[H]
     \centering
@@ -470,7 +470,7 @@ Dựa vào các bản ghi phân tích gói tin hiển thị, có thể thấy r�
         \item ARP hoạt động ở lớp Liên kết dữ liệu (Data Link Layer) và chỉ phục vụ mục đích phân giải địa chỉ MAC từ một địa chỉ IP đã biết.
     \end{itemize}
     
-    \item \textbf{Tuy nhiên, các gói ARP được ghi nhận xuất hiện ngay sau gói DHCP ACK là rất quan trọng:}
+    \item \textbf{Tuy nhiên có các gói ARP được ghi nhận xuất hiện ngay sau gói DHCP ACK:}
     \begin{itemize}
         \item \textbf{Phân giải địa chỉ MAC của Gateway:} Sau khi nhận IP từ DHCP, máy dùng ARP để tìm MAC của Gateway nhằm gửi dữ liệu ra ngoài mạng LAN.
         
@@ -530,7 +530,7 @@ IP Đích: 255.255.255.255 & Đảm bảo gói tin Broadcast đến được t�
 \caption{Phân tích địa chỉ IP trong Discover và Request}
 \end{table}
 
-\textbf{Sự khác biệt rõ ràng nhất nằm ở cách DHCP Server phản hồi lại trong các bước Offer và ACK:}
+\textbf{Sự khác biệt rõ ràng nhất nằm ở cách DHCP Server phản hồi lại trong các bước Offer và ACK (dựa trên capture của nhóm):}
 
 \begin{table}[H]
 \centering
