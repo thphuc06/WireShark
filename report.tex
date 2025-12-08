@@ -208,7 +208,7 @@ $\Rightarrow$ \textbf{Thời gian chồng lấn (Overlap):} Từ 4.894s đến 6
     \label{fig:io_graph}
 \end{figure}
 
-Nhìn vào IO Graph phía trên:
+Nhìn vào IO Graph phía trên (mục statistics $\rightarrow$ IO Graphs), ta thấy:
 \begin{itemize}
     \item Đường màu xanh lá (Server \texttt{128.119.245.12}): Traffic kéo dài với nhiều đỉnh
     \item Đường màu đỏ (Server \texttt{2.56.99.24}): Traffic xuất hiện trong khoảng giữa
@@ -247,8 +247,7 @@ Nhìn vào hình ảnh trên, filter: \texttt{ip.addr == 128.119.245.12}, ta th�
     \label{fig:app_data}
 \end{figure}
 
-Trong khi đó, vào giây thứ 6.803s ta thấy packet 1927 có info 'Application Data' với protocol được nhận diện là 'Hypertext Transfer Protocol', kích thước 3632 bytes - đây có thể là response chứa ảnh \texttt{pearson.png} được gửi về qua HTTPS. Hai quá trình tải diễn ra song song, ảnh \texttt{cover\_small.jpg} đã hoàn thành (6.49s) trong khi ảnh \texttt{pearson.png} mới nhận được dữ liệu lúc 6.803s ở packet 1927.
-
+Trong khi đó, tại giây $6.803$s, packet 1927 có info `Application Data' với kích thước TLS Record là $3632$ bytes -- đây là \textbf{gói tin cuối cùng} chứa dữ liệu ảnh \texttt{pearson.png} được gửi về qua HTTPS. Hai quá trình tải diễn ra song song: ảnh \texttt{cover\_small.jpg} đã hoàn thành ($6.49$s) trong khi \texttt{pearson.png} nhận đủ dữ liệu lúc $6.803$s ở packet 1927.
 \newpage
 \subsubsection{Câu 3: Thông tin phản hồi HTTP của tệp HTML}
 \textbf{Câu hỏi:} Tìm tin nhắn phản hồi HTTP chứa nội dung của trang HTML ban đầu (HTTP-wireshark-file4.html). Status code và status phrase mà server cung cấp là gì?
@@ -356,6 +355,13 @@ Hình ảnh trên hiển thị 3 packets thể hiện quá trình "TCP Three-Way
 
 Trong TCP connection: \texttt{tcp.stream eq 7} (dùng để download file hình ảnh \texttt{8E\_cover\_small.jpg} từ server \texttt{2.56.99.24}), chọn packet 1806 làm ví dụ cho largest data transfer packet (với flag \texttt{[PSH, ACK]} và length=1510 bytes).
 
+\noindent \textbf{Cờ PSH (Push Flag)}
+
+\begin{itemize}
+    \item \textbf{Chức năng:} Trong gói tin này, Server bật cờ PSH để yêu cầu Client chuyển ngay lập tức dữ liệu nhận được lên Lớp Ứng dụng (Trình duyệt) thay vì lưu trữ chờ đầy bộ đệm (TCP Buffer).
+    \item \textbf{Mục đích:} Giúp trình duyệt nhận dữ liệu ảnh tức thì để giải mã và hiển thị cho người dùng, loại bỏ độ trễ (latency) không cần thiết.
+\end{itemize}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{part1_question6_1.png}
@@ -370,20 +376,17 @@ Trong TCP connection: \texttt{tcp.stream eq 7} (dùng để download file hình 
     \label{fig:tcp_window_detail}
 \end{figure}
 
-Phân tích TCP Window Size:
+\noindent \textbf{Phân tích TCP Window Size:}
 \begin{itemize}
     \item \textbf{Window (Raw):} 21 (Đây là giá trị thô ghi trong header của gói tin).
     \item \textbf{Window size scaling factor:} 2048 (Đây là hệ số nhân đã được thỏa thuận trong quá trình bắt tay 3 bước của TCP handshake mục WS (window scale)).
     \item \textbf{Calculated window size:} 43008 (21 $\times$ 2048).
+    \item Giá trị 43008 là kích thước vùng đệm nhận của thiết bị gửi gói tin này (trong trường hợp này là Server \texttt{2.56.99.24}).
+    \item \textbf{Ý nghĩa:} Thông báo cho thiết bị nhận gói tin này (Client) biết rằng thiết bị gửi (Server) hiện đang có bộ nhớ đệm (buffer) trống là 43008 bytes. Điều này cho phép Client có thể gửi liên tiếp lượng dữ liệu tối đa là 43008 bytes ngược lại cho Server mà không cần dừng lại chờ tín hiệu xác nhận (ACK) cho từng gói.
 \end{itemize}
 
-Giá trị 43008 là kích thước vùng đệm nhận của thiết bị gửi gói tin này (trong trường hợp này là Server \texttt{2.56.99.24}).
-
-\begin{itemize}
-    \item Thông báo cho thiết bị nhận gói tin này (Client) biết rằng thiết bị gửi (Server) hiện đang có bộ nhớ đệm (buffer) trống là 43008 bytes. Điều này cho phép Client có thể gửi liên tiếp lượng dữ liệu tối đa là 43008 bytes ngược lại cho Server mà không cần dừng lại chờ tín hiệu xác nhận (ACK) cho từng gói.
-\end{itemize}
-
-\textbf{Tại sao TCP Window Size quan trọng đối với Lớp Giao vận:}
+\vspace{0.5em}
+\noindent \textbf{Tại sao TCP Window Size quan trọng đối với Lớp Giao vận:}
 
 \begin{itemize}
     \item \textbf{Ngăn chặn quá tải:} Đảm bảo Sender không gửi dữ liệu vượt quá khả năng xử lý của bên Receiver.

@@ -14,29 +14,25 @@
 \contentsline {subsubsection}{\numberline {2.2.6}Câu 6: TCP Window Size Value}{10}{subsubsection.2.2.6}%
 \contentsline {section}{\numberline {3}Phần 2: Phân Tích Lưu Lượng DHCP}{12}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Mô tả các bước thực hiện}{12}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Câu hỏi phân tích và trả lời}{13}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Câu 1: Gói tin ARP trong quá trình trao đổi DHCP}{13}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Câu 2: Địa chỉ IP nguồn và đích trong DHCP messages}{15}{subsubsection.3.2.2}%
-\contentsline {subsubsection}{\numberline {3.2.3}Câu 3: Xử lý khi nhận ARP Reply sau DHCP ACK}{16}{subsubsection.3.2.3}%
-\contentsline {subsubsection}{\numberline {3.2.4}Câu 4: Lý do sử dụng UDP cố định và tính phi kết nối}{18}{subsubsection.3.2.4}%
-\contentsline {subsubsection}{\numberline {3.2.5}Câu 5: Checksum UDP và xử lý lỗi}{20}{subsubsection.3.2.5}%
-\contentsline {section}{\numberline {4}Phần 3: Phân Tích Lớp Mạng và Lớp Liên Kết}{22}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Mô tả các bước thực hiện}{22}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Câu hỏi phân tích và trả lời}{22}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Câu 1: Địa chỉ IP trong DNS Query}{22}{subsubsection.4.2.1}%
-\contentsline {paragraph}{Vai trò của Địa chỉ IP tại Lớp Mạng:}{22}{section*.2}%
-\contentsline {paragraph}{Router chỉ thực hiện Chuyển tiếp (Forwarding) dựa trên Địa chỉ Đích:}{23}{section*.3}%
-\contentsline {subsubsection}{\numberline {4.2.2}Câu 2: Time to Live (TTL)}{24}{subsubsection.4.2.2}%
-\contentsline {paragraph}{Ý nghĩa TTL ban đầu:}{24}{section*.4}%
-\contentsline {paragraph}{Router/gateway xử lý TTL thế nào?}{24}{section*.5}%
-\contentsline {subsubsection}{\numberline {4.2.3}Câu 3: Địa chỉ MAC của Router/Gateway}{26}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Câu 4: Địa chỉ trong Link Layer Header}{27}{subsubsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.5}Câu 5: Trường Type trong Link Layer Header}{28}{subsubsection.4.2.5}%
-\contentsline {section}{\numberline {5}Kết luận}{29}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Từ Phần 1: HTTP Traffic Analysis}{29}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Từ Phần 2: DHCP Traffic Analysis}{29}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Từ Phần 3: Network \& Link Layer Analysis}{29}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Phụ lục}{31}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Yêu cầu nộp bài}{31}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Tiêu chí đánh giá}{31}{subsection.6.2}%
-\contentsline {section}{\numberline {7}Tài liệu tham khảo}{32}{section.7}%
+\contentsline {subsection}{\numberline {3.2}Câu hỏi phân tích và trả lời}{12}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Câu 1: Gói tin ARP trong quá trình trao đổi DHCP}{12}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Câu 2: Địa chỉ IP nguồn và đích trong DHCP messages}{14}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Câu 3: Xử lý khi nhận ARP Reply sau DHCP ACK}{15}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Câu 4: Lý do sử dụng UDP cố định và tính phi kết nối}{17}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}Câu 5: Checksum UDP và xử lý lỗi}{18}{subsubsection.3.2.5}%
+\contentsline {section}{\numberline {4}Phần 3: Phân Tích Lớp Mạng và Lớp Liên Kết}{20}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Mô tả các bước thực hiện}{20}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Câu hỏi phân tích và trả lời}{20}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Câu 1: Địa chỉ IP trong DNS Query}{20}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Câu 2: Time To Live (TTL)}{22}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Câu 3: Địa chỉ MAC của Router/Gateway}{24}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Câu 4: Địa chỉ trong Link Layer Header}{25}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Câu 5: Trường Type trong Link Layer Header}{26}{subsubsection.4.2.5}%
+\contentsline {section}{\numberline {5}Kết luận}{27}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Từ Phần 1: HTTP Traffic Analysis}{27}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Từ Phần 2: DHCP Traffic Analysis}{27}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Từ Phần 3: Network \& Link Layer Analysis}{27}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Phụ lục}{29}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Yêu cầu nộp bài}{29}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Tiêu chí đánh giá}{29}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Tài liệu tham khảo}{30}{section.7}%
