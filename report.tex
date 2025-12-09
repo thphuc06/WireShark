@@ -449,7 +449,7 @@ Trong TCP connection: \texttt{tcp.stream eq 7} (dùng để download file hình 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{part3_mota.png}
+    \includegraphics[width=0.9\textwidth]{part2_mota.png}
     \caption{Kết quả capture gói tin DHCP}
 \end{figure}
 
@@ -464,13 +464,12 @@ Dựa vào các bản ghi phân tích gói tin hiển thị, có thể thấy r�
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{part2_question1_2.png}
-    \caption{Gói tin ARP xuất hiện sau DHCP ACK}
+    \includegraphics[width=0.9\textwidth]{part2_question1.png}
+    \caption{Không có gói tin ARP nào xuất hiện trong cả 2 chu kì DORA của DHCP}
 \end{figure}
 
-\textbf{Kết luận:}
 \begin{itemize}
-    \item Trong khoảng thời gian của 2 chu kì trên, không có gói tin ARP được trao đổi trong quá trình DHCP.
+\item \textbf{Kết luận:} Trong khoảng thời gian của 2 chu kì DORA của DHCP trên, không có gói tin ARP được trao đổi.
 \end{itemize}
 
 \textbf{Giải thích nguyên nhân:}
@@ -502,7 +501,7 @@ Quá trình DHCP sử dụng mô hình trao đổi bốn bước được gọi 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{part2_question2.png}
-    \caption{Các gói tin DHCP}
+    \caption{Các gói tin DHCP messages}
 \end{figure}
 
 \textbf{Bảng phân tích địa chỉ IP trong từng thông điệp:}
@@ -547,7 +546,7 @@ IP Đích: 255.255.255.255 & Đảm bảo gói tin Broadcast đến được t�
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Gói tin} & \textbf{IP đích trong lý thuyết} & \textbf{IP đích trong dữ liệu thực tế} \\
+\textbf{Gói tin} & \textbf{IP đích trong lý thuyết} & \textbf{IP đích trong dữ liệu của nhóm} \\
 \hline
 Offer và ACK & 255.255.255.255 (Broadcast) & 192.168.1.101 (Unicast) \\
 \hline
