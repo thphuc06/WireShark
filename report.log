@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.8)  8 DEC 2025 21:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.8)  9 DEC 2025 12:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1068,11 +1068,11 @@ File: part1_question1.png Graphic file (type png)
 <use part1_question1.png>
 Package pdftex.def Info: part1_question1.png  used on input line 161.
 (pdftex.def)             Requested size: 409.71692pt x 77.88101pt.
-<part1_question2_1.png, id=213, 517.18219pt x 74.52844pt>
+<part1_question2_1.png, id=213, 574.145pt x 66.2475pt>
 File: part1_question2_1.png Graphic file (type png)
 <use part1_question2_1.png>
 Package pdftex.def Info: part1_question2_1.png  used on input line 191.
-(pdftex.def)             Requested size: 409.71692pt x 59.04398pt.
+(pdftex.def)             Requested size: 409.71692pt x 47.27562pt.
 [3 <./part1_question1.png>]
 <part1_question2_2.png, id=222, 417.81094pt x 348.55219pt>
 File: part1_question2_2.png Graphic file (type png)
@@ -1109,25 +1109,25 @@ Package pdftex.def Info: part1_question3_2.png  used on input line 268.
 (pdftex.def)             Requested size: 409.71692pt x 139.12204pt.
  [7 <./part1_question3_1.png> <./part1_question3_2.png>]
 LaTeX Font Info:    Font shape `T5/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T5/cmtt/m/n' tried instead on input line 287.
+(Font)              Font shape `T5/cmtt/m/n' tried instead on input line 298.
 <part1_question4_1.png, id=261, 1275.26437pt x 294.34969pt>
 File: part1_question4_1.png Graphic file (type png)
 <use part1_question4_1.png>
-Package pdftex.def Info: part1_question4_1.png  used on input line 291.
+Package pdftex.def Info: part1_question4_1.png  used on input line 302.
 (pdftex.def)             Requested size: 409.71692pt x 94.5666pt.
 <part1_question4_2.png, id=262, 1355.8153pt x 241.65282pt>
 File: part1_question4_2.png Graphic file (type png)
 <use part1_question4_2.png>
-Package pdftex.def Info: part1_question4_2.png  used on input line 311.
+Package pdftex.def Info: part1_question4_2.png  used on input line 322.
 (pdftex.def)             Requested size: 409.71692pt x 73.02368pt.
  [8 <./part1_question4_1.png> <./part1_question4_2.png>] [9]
 <part1_question5.png, id=275, 1257.94969pt x 79.79813pt>
 File: part1_question5.png Graphic file (type png)
 <use part1_question5.png>
-Package pdftex.def Info: part1_question5.png  used on input line 336.
+Package pdftex.def Info: part1_question5.png  used on input line 347.
 (pdftex.def)             Requested size: 409.71692pt x 25.99008pt.
 
-Overfull \hbox (53.0955pt too wide) in paragraph at lines 356--357
+Overfull \hbox (53.0955pt too wide) in paragraph at lines 367--368
 []\T5/cmr/m/n/12 Trong TCP con-nec-tion: \T5/cmtt/m/n/12 tcp.stream eq 7 \T5/cm
 r/m/n/12 (dòng ^^_º down-load file h¼nh £nh \T5/cmtt/m/n/12 8E_cover_small.jpg
  []
@@ -1135,16 +1135,16 @@ r/m/n/12 (dòng ^^_º down-load file h¼nh £nh \T5/cmtt/m/n/12 8E_cover_small.jpg
 <part1_question6_1.png, id=276, 1347.53438pt x 206.27063pt>
 File: part1_question6_1.png Graphic file (type png)
 <use part1_question6_1.png>
-Package pdftex.def Info: part1_question6_1.png  used on input line 367.
+Package pdftex.def Info: part1_question6_1.png  used on input line 378.
 (pdftex.def)             Requested size: 409.71692pt x 62.71573pt.
 <part1_question6_2.png, id=277, 293.59688pt x 114.4275pt>
 File: part1_question6_2.png Graphic file (type png)
 <use part1_question6_2.png>
-Package pdftex.def Info: part1_question6_2.png  used on input line 374.
+Package pdftex.def Info: part1_question6_2.png  used on input line 385.
 (pdftex.def)             Requested size: 409.71692pt x 159.6858pt.
 [10 <./part1_question5.png> <./part1_question6_1.png>] [11 <./part1_question6_2
 .png>]
-Overfull \hbox (6.36713pt too wide) in paragraph at lines 425--426
+Overfull \hbox (6.36713pt too wide) in paragraph at lines 436--437
 []\T5/cmr/m/n/12 Khi l»nh \T5/cmtt/m/n/12 ipconfig /renew \T5/cmr/m/n/12 l¦n th
 ù hai ho n t§t, nhªp l»nh \T5/cmtt/m/n/12 ipconfig /release\T5/cmr/m/n/12 . 
  []
@@ -1152,72 +1152,72 @@ Overfull \hbox (6.36713pt too wide) in paragraph at lines 425--426
 <part3_mota.png, id=295, 1088.56688pt x 336.50719pt>
 File: part3_mota.png Graphic file (type png)
 <use part3_mota.png>
-Package pdftex.def Info: part3_mota.png  used on input line 441.
+Package pdftex.def Info: part3_mota.png  used on input line 452.
 (pdftex.def)             Requested size: 409.71692pt x 126.652pt.
 <part2_question1_2.png, id=296, 601.24625pt x 234.8775pt>
 File: part2_question1_2.png Graphic file (type png)
 <use part2_question1_2.png>
-Package pdftex.def Info: part2_question1_2.png  used on input line 456.
+Package pdftex.def Info: part2_question1_2.png  used on input line 467.
 (pdftex.def)             Requested size: 409.71692pt x 160.06223pt.
 [12 <./part3_mota.png>] [13 <./part2_question1_2.png>]
 <part2_question2.png, id=309, 642.14906pt x 86.57344pt>
 File: part2_question2.png Graphic file (type png)
 <use part2_question2.png>
-Package pdftex.def Info: part2_question2.png  used on input line 493.
+Package pdftex.def Info: part2_question2.png  used on input line 504.
 (pdftex.def)             Requested size: 409.71692pt x 55.23903pt.
  [14 <./part2_question2.png>]
 <part2_question3_1.png, id=319, 511.15968pt x 65.49469pt>
 File: part2_question3_1.png Graphic file (type png)
 <use part2_question3_1.png>
-Package pdftex.def Info: part2_question3_1.png  used on input line 571.
+Package pdftex.def Info: part2_question3_1.png  used on input line 582.
 (pdftex.def)             Requested size: 409.71692pt x 52.49673pt.
 <part2_question3_2.png, id=320, 1292.57906pt x 651.93562pt>
 File: part2_question3_2.png Graphic file (type png)
 <use part2_question3_2.png>
-Package pdftex.def Info: part2_question3_2.png  used on input line 595.
+Package pdftex.def Info: part2_question3_2.png  used on input line 606.
 (pdftex.def)             Requested size: 409.71692pt x 206.64406pt.
  [15 <./part2_question3_1.png>] [16 <./part2_question3_2.png>]
-Underfull \hbox (badness 7486) in paragraph at lines 631--631
+Underfull \hbox (badness 7486) in paragraph at lines 642--642
 []\T5/cmr/bx/n/12 ^^^°c ^^_iºm cõa
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 633--633
+Underfull \hbox (badness 1577) in paragraph at lines 644--644
 []\T5/cmr/m/n/12 Khæng b­t tay 3
  []
 
 
-Underfull \hbox (badness 6047) in paragraph at lines 633--634
+Underfull \hbox (badness 6047) in paragraph at lines 644--645
 []\T5/cmr/m/n/12 Gi£m over-head m¤ng,
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 635--635
+Underfull \hbox (badness 1755) in paragraph at lines 646--646
 []\T5/cmr/m/n/12 Khæng tr¤ng th¡i
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 635--635
+Underfull \hbox (badness 1490) in paragraph at lines 646--646
 \T5/cmr/m/n/12 (Dis-cover, Of-fer, Re-quest,
  []
 
 
-Underfull \hbox (badness 6268) in paragraph at lines 637--638
+Underfull \hbox (badness 6268) in paragraph at lines 648--649
 \T5/cmr/m/n/12 khai c£ ð Client v 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 639--639
+Underfull \hbox (badness 10000) in paragraph at lines 650--650
 []\T5/cmr/m/n/12 DHCP sû döng
  []
 
 
-Underfull \hbox (badness 4156) in paragraph at lines 639--640
+Underfull \hbox (badness 4156) in paragraph at lines 650--651
 \T5/cmr/m/n/12 thû l¤i (retry mech-a-
  []
 
 
-Underfull \hbox (badness 1087) in paragraph at lines 639--640
+Underfull \hbox (badness 1087) in paragraph at lines 650--651
 \T5/cmr/m/n/12 nism) v  qu£n lþ thíi
  []
 
@@ -1225,21 +1225,21 @@ Underfull \hbox (badness 1087) in paragraph at lines 639--640
 <part2_question5.png, id=338, 536.75531pt x 207.02344pt>
 File: part2_question5.png Graphic file (type png)
 <use part2_question5.png>
-Package pdftex.def Info: part2_question5.png  used on input line 657.
+Package pdftex.def Info: part2_question5.png  used on input line 668.
 (pdftex.def)             Requested size: 409.71692pt x 158.02492pt.
  [18 <./part2_question5.png>] [19]
 <part3_question1.png, id=350, 963.6pt x 187.19937pt>
 File: part3_question1.png Graphic file (type png)
 <use part3_question1.png>
-Package pdftex.def Info: part3_question1.png  used on input line 728.
+Package pdftex.def Info: part3_question1.png  used on input line 739.
 (pdftex.def)             Requested size: 409.71692pt x 79.59438pt.
  [20 <./part3_question1.png>] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 746--748
+Underfull \hbox (badness 10000) in paragraph at lines 757--759
 
  []
 
 
-Overfull \hbox (66.6991pt too wide) in paragraph at lines 749--751
+Overfull \hbox (66.6991pt too wide) in paragraph at lines 760--762
 []\T5/cmr/m/n/12 ^^^¦u ti¶n, låc gâi DNS Query ^^_¦u ti¶n gûi tîi m¡y chõ DNS b
 ¬ng fil-ter: [][]\T5/cmtt/m/n/12 dns && ip.dst == 8.8.8.8[]\T5/cmr/m/n/12 .
  []
@@ -1247,63 +1247,63 @@ Overfull \hbox (66.6991pt too wide) in paragraph at lines 749--751
 <part3_question2.png, id=360, 409.53pt x 225.34187pt>
 File: part3_question2.png Graphic file (type png)
 <use part3_question2.png>
-Package pdftex.def Info: part3_question2.png  used on input line 755.
+Package pdftex.def Info: part3_question2.png  used on input line 766.
 (pdftex.def)             Requested size: 409.71692pt x 225.4582pt.
 [22 <./part3_question2.png>] [23]
-Underfull \hbox (badness 10000) in paragraph at lines 795--796
+Underfull \hbox (badness 10000) in paragraph at lines 806--807
 
  []
 
 <part3_question3_1.png, id=375, 477.28313pt x 105.89563pt>
 File: part3_question3_1.png Graphic file (type png)
 <use part3_question3_1.png>
-Package pdftex.def Info: part3_question3_1.png  used on input line 805.
+Package pdftex.def Info: part3_question3_1.png  used on input line 816.
 (pdftex.def)             Requested size: 409.71692pt x 90.90363pt.
 <part3_question3_2.png, id=376, 404.51125pt x 77.28876pt>
 File: part3_question3_2.png Graphic file (type png)
 <use part3_question3_2.png>
-Package pdftex.def Info: part3_question3_2.png  used on input line 814.
+Package pdftex.def Info: part3_question3_2.png  used on input line 825.
 (pdftex.def)             Requested size: 409.71692pt x 78.28508pt.
 [24 <./part3_question3_1.png> <./part3_question3_2.png>]
 <part3_question4.png, id=384, 623.32875pt x 75.78313pt>
 File: part3_question4.png Graphic file (type png)
 <use part3_question4.png>
-Package pdftex.def Info: part3_question4.png  used on input line 835.
+Package pdftex.def Info: part3_question4.png  used on input line 846.
 (pdftex.def)             Requested size: 409.71692pt x 49.81348pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--849
+Underfull \hbox (badness 10000) in paragraph at lines 860--860
 []\T5/cmr/m/n/10.95 ^^^÷ñc \T5/cmr/bx/n/10.95 Qu£n trà vi¶n
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 849--849
+Underfull \hbox (badness 10000) in paragraph at lines 860--860
 \T5/cmr/bx/n/10.95 M¤ng/ISP \T5/cmr/m/n/10.95 ho°c m¡y chõ
  []
 
 
-Underfull \hbox (badness 1147) in paragraph at lines 850--850
+Underfull \hbox (badness 1147) in paragraph at lines 861--861
 []\T5/cmr/bx/n/10.95 32 bit \T5/cmr/m/n/10.95 (IPv4) ho°c \T5/cmr/bx/n/10.95 12
 8 bit
  []
 
 [25 <./part3_question4.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 859--860
+Underfull \hbox (badness 10000) in paragraph at lines 870--871
 
  []
 
-<part3_question5.png, id=394, 637.88312pt x 77.28876pt>
+<part3_question5.png, id=394, 620.3175pt x 74.77937pt>
 File: part3_question5.png Graphic file (type png)
 <use part3_question5.png>
-Package pdftex.def Info: part3_question5.png  used on input line 865.
-(pdftex.def)             Requested size: 409.71692pt x 49.6427pt.
+Package pdftex.def Info: part3_question5.png  used on input line 876.
+(pdftex.def)             Requested size: 409.71692pt x 49.39105pt.
 [26 <./part3_question5.png>] [27] [28]
-Overfull \hbox (20.1148pt too wide) in paragraph at lines 947--947
+Overfull \hbox (20.1148pt too wide) in paragraph at lines 958--958
 []    \T5/cmtt/m/n/12 +-- part3.pcapng                         <-- Network & Li
 nk Layer capture[] 
  []
 
 [29]
-Overfull \hbox (1.52219pt too wide) in paragraph at lines 969--970
+Overfull \hbox (1.52219pt too wide) in paragraph at lines 980--981
 []\T5/cmr/m/n/12 Giîi Thi»u v· M¤ng M¡y T½nh. (2024). \T5/cmr/m/it/12 Wire-shar
 k Net-work Anal-y-sis Tu-to-rial \T5/cmr/m/n/12 [Video].
  []
@@ -1323,7 +1323,7 @@ Here is how much of TeX's memory you used:
  45709 multiletter control sequences out of 15000+600000
  574167 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,93p,554b,534s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,11n,93p,554b,602s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Tran Hoang Phuc\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
 pi600\tcrm1200.pk><C:/Users/Tran Hoang Phuc/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Tran Hoang Phuc/AppData/Local/Pr
@@ -1338,7 +1338,7 @@ ms/MiKTeX/fonts/type1/vntex/vnr/vnr17.pfb><C:/Users/Tran Hoang Phuc/AppData/Loc
 al/Programs/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/Tran Hoang Phuc/A
 ppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt10.pfb><C:/Users/Tran Ho
 ang Phuc/AppData/Local/Programs/MiKTeX/fonts/type1/vntex/vnr/vntt12.pfb>
-Output written on report.pdf (31 pages, 1240535 bytes).
+Output written on report.pdf (31 pages, 1243718 bytes).
 PDF statistics:
  503 PDF objects out of 1000 (max. 8388607)
  112 named destinations out of 1000 (max. 500000)

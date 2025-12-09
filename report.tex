@@ -189,7 +189,7 @@ Trình duyệt tải hai ảnh một cách \textbf{song song} từ hai web serve
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{part1_question2_1.png}
-    \caption{Timeline của 2 kết nối TCP đến 2 server}
+    \caption{Timeline của 2 kết nối TCP đến 2 server (statistics -> conversations -> TCP)}
     \label{fig:tcp_connections}
 \end{figure}
 
@@ -247,7 +247,7 @@ Nhìn vào hình ảnh trên, filter: \texttt{ip.addr == 128.119.245.12}, ta th�
     \label{fig:app_data}
 \end{figure}
 
-Trong khi đó, tại giây $6.803$s, packet 1927 có info `Application Data' với kích thước TLS Record là $3632$ bytes -- đây là \textbf{gói tin cuối cùng} chứa dữ liệu ảnh \texttt{pearson.png} được gửi về qua HTTPS. Hai quá trình tải diễn ra song song: ảnh \texttt{cover\_small.jpg} đã hoàn thành ($6.49$s) trong khi \texttt{pearson.png} nhận đủ dữ liệu lúc $6.803$s ở packet 1927.
+Trong khi đó, tại giây $6.803$s, packet 1927 có info `Application Data' với kích thước TLS Record là $3632$ bytes -- đây là \textbf{gói tin cuối cùng} chứa dữ liệu ảnh \texttt{pearson.png} được gửi về qua HTTPS (dưới dạng mã hóa TLS). Hai quá trình tải diễn ra song song: ảnh \texttt{cover\_small.jpg} đã hoàn thành ($6.49$s) trong khi \texttt{pearson.png} nhận đủ dữ liệu lúc $6.803$s ở packet 1927.
 \newpage
 \subsubsection{Câu 3: Thông tin phản hồi HTTP của tệp HTML}
 \textbf{Câu hỏi:} Tìm tin nhắn phản hồi HTTP chứa nội dung của trang HTML ban đầu (HTTP-wireshark-file4.html). Status code và status phrase mà server cung cấp là gì?
@@ -275,6 +275,13 @@ Ta click vào packet trả về của server (Packet thứ 951 trên hình), và
     \item \textbf{Status phrase:} OK
 \end{itemize}
 
+Mã trạng thái \textbf{200 OK} là mã phản hồi HTTP phổ biến nhất.
+
+\begin{itemize}
+    \item Nó biểu thị rằng \textbf{yêu cầu (request)} của máy khách (client) đã được \textbf{thành công} xử lý.
+    \item Đồng thời, máy chủ (server) đã \textbf{cung cấp dữ liệu} được yêu cầu (ví dụ: một trang web, dữ liệu JSON, hình ảnh) trong phản hồi.
+\end{itemize}
+
 \newpage
 \subsubsection{Câu 4: Số lượng kết nối TCP và Stream Index Numbers}
 \textbf{Câu hỏi:} Dựa trên câu trả lời ở Câu 1, có bao nhiêu kết nối TCP riêng biệt được thiết lập để tải tệp HTML và hai hình ảnh nhúng? Cung cấp bằng chứng bằng cách liệt kê các Stream Index Numbers duy nhất (ví dụ: \texttt{tcp.stream eq X}) được sử dụng cho ba đối tượng này.
@@ -282,6 +289,10 @@ Ta click vào packet trả về của server (Packet thứ 951 trên hình), và
 \textbf{Trả lời:}
 
 Có tổng cộng \textbf{2 TCP connections} được thiết lập để tải file HTML và hai hình ảnh nhúng.
+
+\medskip
+\noindent
+Nhấp chuột phải vào một packet của từng destination khác nhau, chọn \texttt{Follow} $\rightarrow$ \texttt{TCP Stream} để xem các TCP stream tương ứng.
 
 \begin{itemize}
 \item \textbf{TCP Connection thứ nhất - \texttt{tcp.stream eq 5}:}
