@@ -749,8 +749,9 @@ Việc địa chỉ IP Nguồn (Source IP Address) và địa chỉ IP Đích (D
         \item Khi host nguồn tạo datagram, nó gán IP nguồn là địa chỉ IP của chính nó và IP đích là địa chỉ IP của host đích cuối cùng (ở đây là máy chủ DNS 8.8.8.8).
         \item Các router trung gian chỉ thực hiện chức năng chuyển tiếp (forwarding) cục bộ: chúng đọc trường Địa chỉ IP Đích trong header IP, tra bảng chuyển tiếp (forwarding table) để chọn cổng ra thích hợp, rồi gửi tiếp gói tin.
         \item Nếu Địa chỉ IP Đích bị thay đổi giữa chừng, các router kế tiếp sẽ mất thông tin cần thiết để định tuyến gói tin đến host nhận cuối cùng. Do đó, Địa chỉ IP Đích phải giữ nguyên từ host nguồn đến host đích.
-        \item Vì vậy, từ lúc rời laptop cho đến khi tới Google DNS, datagram vẫn giữ nguyên cặp địa chỉ IP 192.168.0.103 $\rightarrow$ 8.8.8.8, đảm bảo dịch vụ truyền thông end-to-end giữa hai host.
+        \item Trong trường hợp dùng NAT thì chỉ có Địa chỉ IP Nguồn mới bị thay đổi khi gói tin rời mạng LAN. Tuy nhiên, trong ví dụ này, host nguồn sử dụng địa chỉ IP riêng nên NAT không dùng đến, và Địa chỉ IP Nguồn cũng giữ nguyên.
     \end{itemize}
+    Vì vậy, từ lúc rời laptop cho đến khi tới Google DNS, datagram vẫn giữ nguyên cặp địa chỉ IP 192.168.0.103 $\rightarrow$ 8.8.8.8, đảm bảo dịch vụ truyền thông end-to-end giữa hai host.
 
 \newpage
 \subsubsection{Câu 2: Time To Live (TTL)}
