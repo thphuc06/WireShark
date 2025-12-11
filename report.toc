@@ -32,7 +32,4 @@
 \contentsline {subsection}{\numberline {5.1}Từ Phần 1: HTTP Traffic Analysis}{27}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Từ Phần 2: DHCP Traffic Analysis}{27}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Từ Phần 3: Network \& Link Layer Analysis}{27}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Phụ lục}{29}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Yêu cầu nộp bài}{29}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Tiêu chí đánh giá}{29}{subsection.6.2}%
-\contentsline {section}{\numberline {7}Tài liệu tham khảo}{30}{section.7}%
+\contentsline {section}{\numberline {6}Tài liệu tham khảo}{29}{section.6}%
